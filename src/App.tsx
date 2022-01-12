@@ -1,15 +1,16 @@
 import React, { ChangeEvent, useState } from 'react';
-import us, { Store } from './user-stories';
+import us from './user-stories';
 import HeatMap from 'react-heatmap-grid';
 import './App.css';
+import { Store } from './documents';
 
 const App = () => {
     const [store, setStore] = useState<Store>({ heatmap: { xLabels: [], yLabels: [], data: [] } });
 
-    const fileLoaded = (e: ChangeEvent<HTMLInputElement>) => {
+    const fileLoaded = async (e: ChangeEvent<HTMLInputElement>) => {
         if (!e || !e.target || !e.target.files) return;
 
-        const newStore = us.loadConsumptions(store, e.target.files[0]);
+        const newStore = await us.updateConsumptions(store, e.target.files[0]);
         setStore(newStore);
     };
 
