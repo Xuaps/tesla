@@ -46,7 +46,7 @@ jobs:
  
     - name: Terraform apply
       id: apply
-      run: terraform -chdir=terraform apply -no-color --var-file=main.tfvars
+      run: terraform -chdir=terraform apply -auto-approve -no-color --var-file=main.tfvars
     
     - name: Deploy app
       run: az storage blob upload-batch —account-name xuapsstsadevelopmentwe -d ‘$web’ -s dist/.
