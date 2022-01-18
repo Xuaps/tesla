@@ -38,7 +38,7 @@ jobs:
 
     - name: Terraform Validate
       id: validate
-      run: terraform -chdir=terraform validate -no-color --var-file=main.tfvars
+      run: terraform -chdir=terraform validate -no-color
 
     - name: Terraform Plan
       id: plan
