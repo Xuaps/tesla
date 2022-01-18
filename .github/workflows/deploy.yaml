@@ -22,7 +22,6 @@ jobs:
       run:
         shell: bash
  
-    steps:
     # Checkout the repository to the GitHub Actions runner
     steps:
     - uses: actions/checkout@v2
