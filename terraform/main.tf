@@ -4,6 +4,13 @@ terraform {
       version = "=2.20.0"
     }
   }
+
+  backend "azurerm" {
+    resource_group_name  = "blogs"
+    storage_account_name = "xuapscomstorage"
+    container_name       = "tfstatetesla"
+    key                  = "prod.terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
