@@ -6,7 +6,8 @@
     "scripts": {
         "build": "webpack",
         "start": "webpack-dev-server",
-        "lint": "eslint '*/**/*.{ts}' --quiet --fix",
+        "lint": "eslint --ext .ts --ext .tsx --quiet",
+        "lint:fix": "eslint --ext .ts --ext .tsx --fix .",
         "test": "jest",
         "test:watch": "jest --watch",
         "prepare": "husky install",

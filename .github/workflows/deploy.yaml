@@ -7,8 +7,71 @@ on:
   pull_request:
  
 jobs:
+  lint:
+    name: 'Linter'
+    runs-on: ubuntu-latest
+    environment: production
+ 
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+ 
+    # Checkout the repository to the GitHub Actions runner
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.13.2'
+
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: npm-${{ hashFiles('package-lock.json') }}
+        restore-keys: npm-
+
+    - name: Install dependencies
+      run: npm ci --ignore-scripts
+
+    - name: Linter
+      run: npm run lint
+
+  test:
+    name: 'Test'
+    runs-on: ubuntu-latest
+    environment: production
+ 
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+ 
+    # Checkout the repository to the GitHub Actions runner
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.13.2'
+
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: npm-${{ hashFiles('package-lock.json') }}
+        restore-keys: npm-
+
+    - name: Install dependencies
+      run: npm ci --ignore-scripts
+
+    - name: Linter
+      run: npm run test
+
   provision:
     name: 'Terraform'
+    needs: [linter, test]
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
