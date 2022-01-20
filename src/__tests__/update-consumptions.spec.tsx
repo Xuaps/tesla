@@ -3,11 +3,7 @@ import { updateConsumptions } from '../user-stories';
 describe('update consumptions', () => {
     it('should updated consumptions with readings from a file', async () => {
         const store = {
-            heatmap: {
-                xLabels: [],
-                yLabels: [],
-                data: [],
-            },
+            consumptions: [],
         };
         const file = new File(
             [
@@ -19,12 +15,10 @@ describe('update consumptions', () => {
             ],
             'consumptions.csv',
         );
-        const {
-            heatmap: { xLabels, yLabels, data },
-        } = await updateConsumptions(store, file);
+        const { consumptions } = await updateConsumptions(store, file);
 
-        expect(xLabels).toHaveLength(24);
-        expect(yLabels).toEqual(expect.arrayContaining(['28/07/2019']));
-        expect(data).toEqual(expect.arrayContaining([[0.232, 0.201, 0.138, 0.135]]));
+        expect(consumptions[0].data).toHaveLength(4);
+        expect(consumptions[0].name).toEqual('28/07/2019');
+        expect(consumptions[0].data).toEqual(expect.arrayContaining([0.232, 0.201, 0.138, 0.135]));
     });
 });

@@ -1,11 +1,10 @@
 import { Consumption } from './actions';
 
 export type Store = {
-    heatmap: {
-        xLabels: string[];
-        yLabels: string[];
-        data: number[][];
-    };
+    consumptions: {
+        name: string;
+        data: number[];
+    }[];
 };
 
 export const getNextState = (store: Store, consumptions: Consumption[]): Store => {
@@ -16,13 +15,9 @@ export const getNextState = (store: Store, consumptions: Consumption[]): Store =
 
     return {
         ...store,
-        heatmap: {
-            xLabels: Array.from({ length: 24 }, (_, i) => i + 1).map((hour) => hour.toString()),
-            yLabels: dates,
-            data: dates.reduce(
-                (acc: number[][], d) => [...acc, consumptions.filter((c) => c.date === d).map((c) => c.consumption)],
-                [],
-            ),
-        },
+        consumptions: dates.map((date) => ({
+            name: date,
+            data: consumptions.filter((c) => c.date === date).map((c) => c.consumption),
+        })),
     };
 };
