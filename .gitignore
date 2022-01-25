@@ -123,3 +123,7 @@ dist
 # .tfstate files
 *.tfstate
 *.tfstate.*
+*.hcl
+
+# python 
+venv/

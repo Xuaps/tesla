@@ -66,6 +66,8 @@ locals {
   apimName           = "${var.prefix}-${var.resourceFunction}-${var.environment}-${var.region}"
   kvName             = "${var.prefix}-${var.resourceFunction}-kv-${var.environment}-${var.region}"
   appInsightsName    = "${var.prefix}-${var.resourceFunction}-appinsights-${var.environment}-${var.region}"
+  appServicePlan     = "${var.prefix}-${var.resourceFunction}-appserviceplan-${var.environment}-${var.region}"
+  functionApp        = "${var.prefix}-${var.resourceFunction}-functionapp-${var.environment}-${var.region}"
 }
 
 # --- Get reference to logged on Azure subscription ---
@@ -94,4 +96,58 @@ resource "azurerm_storage_account" "sa" {
 
 output "storageAccountName" {
   value = azurerm_storage_account.sa.name
+}
+
+#app insight
+resource "azurerm_application_insights" "application_insights" {
+  name                = local.appInsightsName
+  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
+  application_type    = "other"
+}
+
+#app service plan
+resource "azurerm_app_service_plan" "app_service_plan" {
+  name                = local.appServicePlan
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
+  kind                = "FunctionApp"
+  reserved = true # this has to be set to true for Linux. Not related to the Premium Plan
+  sku {
+    tier = "Dynamic"
+    size = "Y1"
+  }
+}
+
+#function app
+resource "azurerm_function_app" "function_app" {
+  name                       = local.functionApp
+  resource_group_name        = azurerm_resource_group.rg.name
+  location                   = var.location
+  app_service_plan_id        = azurerm_app_service_plan.app_service_plan.id
+  app_settings = {
+    "WEBSITE_RUN_FROM_PACKAGE" = "",
+    "FUNCTIONS_WORKER_RUNTIME" = "python",
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.application_insights.instrumentation_key,
+  }
+  os_type = "linux"
+  storage_account_name       = azurerm_storage_account.sa.name
+  storage_account_access_key = azurerm_storage_account.sa.primary_access_key
+  version                    = "~3"
+
+  lifecycle {
+    ignore_changes = [
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"],
+    ]
+  }
+}
+
+output "function_app_name" {
+  value = azurerm_function_app.function_app.name
+  description = "Deployed function app name"
+}
+
+output "function_app_default_hostname" {
+  value = azurerm_function_app.function_app.default_hostname
+  description = "Deployed function app hostname"
 }
