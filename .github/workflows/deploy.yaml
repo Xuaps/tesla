@@ -5,7 +5,7 @@ on:
     branches:
     - main
 env:
-  AZURE_FUNCTIONAPP_NAME: collector
+  AZURE_FUNCTIONAPP_NAME: xuaps-st-functionapp-poduction-we
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/functions'
   PYTHON_VERSION: '3.7'
  
