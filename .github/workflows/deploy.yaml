@@ -6,7 +6,7 @@ on:
     - main
 env:
   AZURE_FUNCTIONAPP_NAME: collector
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/functions/collector'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/functions'
   PYTHON_VERSION: '3.7'
  
 jobs:
