@@ -157,7 +157,6 @@ jobs:
   deploy-collector:
     runs-on: ubuntu-latest
     environment: dev
-    runs-on: ubuntu-18.04
     steps:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
