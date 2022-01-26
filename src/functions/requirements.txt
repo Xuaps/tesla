@@ -2,3 +2,5 @@
 
 azure-functions
 pytest
+pytest-asyncio
+aiopvpc
