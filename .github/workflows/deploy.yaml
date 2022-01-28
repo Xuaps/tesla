@@ -31,7 +31,6 @@ jobs:
 
     - name: Cache dependencies
       uses: actions/cache@v2
-      working-directory: ./app 
       with:
         path: ~/.npm
         key: npm-${{ hashFiles('package-lock.json') }}
