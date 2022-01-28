@@ -30,8 +30,8 @@ jobs:
         node-version: '16.13.2'
 
     - name: Cache dependencies
-      uses: actions/cache@v2
       working-directory: ${{ env.APP_PATH }} 
+      uses: actions/cache@v2
       with:
         path: ~/.npm
         key: npm-${{ hashFiles('package-lock.json') }}
