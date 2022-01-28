@@ -6,8 +6,9 @@ on:
     - main
 env:
   AZURE_FUNCTIONAPP_NAME: xuaps-st-functionapp-poduction-we
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/functions'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './functions/src'
   PYTHON_VERSION: '3.7'
+  APP_PATH: './app'
  
 jobs:
   lint:
@@ -30,15 +31,18 @@ jobs:
 
     - name: Cache dependencies
       uses: actions/cache@v2
+      working-directory: {{env.APP_PATH}} 
       with:
         path: ~/.npm
         key: npm-${{ hashFiles('package-lock.json') }}
         restore-keys: npm-
 
     - name: Install dependencies
+      working-directory: {{env.APP_PATH}} 
       run: npm ci --ignore-scripts
 
     - name: Linter
+      working-directory: {{env.APP_PATH}} 
       run: npm run lint
 
   test:
@@ -61,15 +65,18 @@ jobs:
 
     - name: Cache dependencies
       uses: actions/cache@v2
+      working-directory: {{env.APP_PATH}} 
       with:
         path: ~/.npm
         key: npm-${{ hashFiles('package-lock.json') }}
         restore-keys: npm-
 
     - name: Install dependencies
+      working-directory: {{env.APP_PATH}} 
       run: npm ci --ignore-scripts
 
-    - name: Linter
+    - name: Tests
+      working-directory: {{env.APP_PATH}} 
       run: npm run test
 
   provision:
@@ -137,22 +144,25 @@ jobs:
 
     - name: Cache dependencies
       uses: actions/cache@v2
+      working-directory: {{env.APP_PATH}} 
       with:
         path: ~/.npm
         key: npm-${{ hashFiles('package-lock.json') }}
         restore-keys: npm-
 
     - name: Install dependencies
+      working-directory: {{env.APP_PATH}} 
       run: npm ci --ignore-scripts
 
     - name: Build
+      working-directory: {{env.APP_PATH}} 
       run: npm run build
 
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name xuapsstsapoductionwe --auth-mode key -d '$web' -s ./dist/.
+            az storage blob upload-batch --account-name xuapsstsapoductionwe --auth-mode key -d '$web' -s ./app/dist/.
 
   deploy-collector:
     name: "Deploy collector"
