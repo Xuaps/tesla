@@ -1,14 +1,11 @@
 import datetime
-import logging
-
+import json
 import azure.functions as func
+from . import prices
 
 
-def main(timer: func.TimerRequest) -> None:
-    utc_timestamp = datetime.datetime.utcnow().replace(
-        tzinfo=datetime.timezone.utc).isoformat()
+async def main(timer: func.TimerRequest, file: func.Out[bytes]) -> None:
+    date = datetime.datetime.now()
+    data = await prices.getPricesAt(date)
 
-    if timer.past_due:
-        logging.info('The timer is past due!')
-
-    logging.info('Python timer trigger function ran at %s', utc_timestamp)
+    file.set(json.dumps({k.isoformat(): v for k, v in data.items()}))
