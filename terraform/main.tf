@@ -111,7 +111,7 @@ resource "azurerm_app_service_plan" "app_service_plan" {
   name                = local.appServicePlan
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
-  kind                = "functionapp"
+  kind                = "Linux"
   reserved            = true
   sku {
     tier = "Dynamic"
