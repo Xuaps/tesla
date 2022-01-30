@@ -135,6 +135,11 @@ resource "azurerm_function_app" "function_app" {
   storage_account_access_key = azurerm_storage_account.sa.primary_access_key
   version                    = "~3"
 
+  site_config {
+    linux_fx_version= "Python|3.9"        
+    ftps_state = "Disabled"
+  }
+
   lifecycle {
     ignore_changes = [
       app_settings["WEBSITE_RUN_FROM_PACKAGE"],
