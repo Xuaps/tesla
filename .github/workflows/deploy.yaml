@@ -7,7 +7,7 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: xuaps-st-functionapp-poduction-we
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './functions/src'
-  PYTHON_VERSION: '3.7'
+  PYTHON_VERSION: '3.9'
   APP_PATH: ./app
  
 jobs:
