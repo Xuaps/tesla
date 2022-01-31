@@ -15,8 +15,8 @@ export type Consumption = {
     consumption: number;
 };
 
-export const parseCSV = (file: File): Promise<Data[]> => {
-    return new Promise((resolve, reject) => {
+export const parseCSV = (file: File) => () => {
+    return new Promise<Data[]>((resolve, reject) => {
         Papa.parse<Data, File>(file, {
             header: true,
             skipEmptyLines: true,
