@@ -1,4 +1,4 @@
-import { updateConsumptions } from '../user-stories';
+import { updateConsumptions } from '../src/user-stories';
 
 describe('update consumptions', () => {
     it('should updated consumptions with readings from a file', async () => {
