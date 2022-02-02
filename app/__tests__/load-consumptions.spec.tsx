@@ -1,4 +1,5 @@
 import React from 'react';
+import fetchMock from 'jest-fetch-mock';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import consumptions from './asssets/consumptions';
 import App from '../src/App';
@@ -19,6 +20,7 @@ jest.mock('react-apexcharts', () => {
 });
 
 test('it should load consumptions data', async () => {
+    fetchMock.mockResponse('{"2021-10-23T20:00:00+00:00": 0.29274, "2021-10-23T21:00:00+00:00": 0.27203}');
     render(<App />);
 
     const button = screen.getByLabelText('Consumo en formato CNMC:');

@@ -4,6 +4,7 @@ export type Store = {
     consumptions: {
         name: string;
         data: number[];
+        prices: (number | null)[];
     }[];
 };
 
@@ -15,9 +16,13 @@ export const getNextState = (store: Store, consumptions: Consumption[]): Store =
 
     return {
         ...store,
-        consumptions: dates.map((date) => ({
-            name: date,
-            data: consumptions.filter((c) => c.date === date).map((c) => c.consumption),
-        })),
+        consumptions: dates.map((date) => {
+            const consumptionByDate = consumptions.filter((c) => c.date === date);
+            return {
+                name: date,
+                data: consumptionByDate.map((c) => c.consumption),
+                prices: consumptionByDate.map((c) => c.price && c.consumption * c.price),
+            };
+        }),
     };
 };

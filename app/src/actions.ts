@@ -13,8 +13,14 @@ export type Consumption = {
     date: string;
     hour: string;
     consumption: number;
+    price: number | null;
 };
 
+export type Prices = {
+    [key: string]: number;
+};
+
+//calculations ----
 export const parseCSV = (file: File) => () => {
     return new Promise<Data[]>((resolve, reject) => {
         Papa.parse<Data, File>(file, {
@@ -33,6 +39,47 @@ export const toConsumptions = (data: Data[]): Consumption[] => {
             date: row.Fecha,
             hour: row.Hora,
             consumption: parseFloat(row.Consumo.replace(',', '.')),
+            price: null,
         };
     });
+};
+
+const formatDate = (date: string): string => {
+    const [day, month, year] = date.split('/');
+
+    return `${year}-${month}-${day}`;
+};
+
+const toISOString = (date: string, hour: string): string => {
+    const [day, month, year] = date.split('/');
+
+    return `${year}-${month}-${day}T${('0' + hour).slice(-2)}:00:00+00:00`;
+};
+
+//actions ----
+const fetchPrices = async (date: string): Promise<Prices> => {
+    const response = await fetch(`prices/2.0TD/${formatDate(date)}.json`);
+    try {
+        return await response.json();
+    } catch {
+        console.log(`Prices for ${date} couldn't be found`);
+        return {};
+    }
+};
+
+export const getConsumptionsWithPrice = (consumptions: Consumption[]) => async () => {
+    const dates = consumptions.reduce((acc: string[], c) => {
+        if (acc.indexOf(c.date) > -1) return acc;
+        return [...acc, c.date];
+    }, []);
+
+    const prices = (await Promise.all(dates.map((date) => fetchPrices(date)))).reduce(
+        (acc, price) => ({ ...acc, ...price }),
+        {},
+    );
+
+    return consumptions.map((consumption) => ({
+        ...consumption,
+        price: prices[toISOString(consumption.date, consumption.hour)],
+    }));
 };
