@@ -2,7 +2,7 @@ import React from 'react';
 import fetchMock from 'jest-fetch-mock';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import consumptions from './asssets/consumptions';
-import App from '../src/App';
+import App from '../App';
 
 jest.mock('react-apexcharts', () => {
     return {

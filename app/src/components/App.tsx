@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Col, Container, Form, Row } from 'react-bootstrap';
-import us from './user-stories';
-import { Store } from './documents';
+import us from '../user-stories';
+import { Store } from '../documents';
 import './App.css';
 import Heatmap from './Heatmap';
 

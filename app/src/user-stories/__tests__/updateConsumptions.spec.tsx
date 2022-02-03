@@ -1,5 +1,5 @@
 import fetchMock from 'jest-fetch-mock';
-import { updateConsumptions } from '../src/user-stories';
+import { updateConsumptions } from '..';
 
 describe('update consumptions', () => {
     it('should updated consumptions with readings from a file', async () => {

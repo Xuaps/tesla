@@ -1,4 +1,4 @@
-import { Consumption } from './actions';
+import { Consumption } from '../actions';
 
 export type Store = {
     consumptions: {

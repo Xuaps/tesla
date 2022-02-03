@@ -1,5 +1,5 @@
 import fetchMock from 'jest-fetch-mock';
-import { getConsumptionsWithPrice, Consumption } from '../src/actions';
+import { getConsumptionsWithPrice, Consumption } from '..';
 
 describe('Get consumptions with price', () => {
     it('should add price for consumption', async () => {
