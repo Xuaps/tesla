@@ -87,6 +87,7 @@ jobs:
         # and run all Cypress tests
         - name: Cypress run
           uses: cypress-io/github-action@v2
+          working-directory: ${{ env.APP_PATH }} 
           with:
             build: npm run build
             start: npm start

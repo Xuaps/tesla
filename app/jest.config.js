@@ -9,5 +9,6 @@ module.exports = async () => {
             '\\.(css|less)$': '<rootDir>/__mocks__/styleMock.js',
         },
         setupFilesAfterEnv: ['./jest.setup.js'],
+        testPathIgnorePatterns: ['/cypress/'],
     };
 };
