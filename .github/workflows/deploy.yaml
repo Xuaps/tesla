@@ -13,7 +13,7 @@ env:
  
 jobs:
   lint:
-    name: 'Linter App'
+    name: 'Lint App'
     runs-on: ubuntu-latest
     environment: production
  
@@ -79,7 +79,7 @@ jobs:
       run: npm run test
 
   cypress:
-      name: 'E2E app'
+      name: 'E2E App'
       runs-on: ubuntu-latest
       environment: production
       steps:
@@ -95,7 +95,7 @@ jobs:
             start: npm start
 
   lint-functions:
-    name: 'Lint functions'
+    name: 'Lint Functions'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: "production"
@@ -131,7 +131,7 @@ jobs:
           pipenv run lint -v
 
   test-functions:
-    name: 'Test functions'
+    name: 'Test Functions'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: "production"
