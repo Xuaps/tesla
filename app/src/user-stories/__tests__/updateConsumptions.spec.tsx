@@ -3,7 +3,7 @@ import { updateConsumptions } from '..';
 
 describe('update consumptions', () => {
     it('should updated consumptions with readings from a file', async () => {
-        fetchMock.mockResponse('{"2019-07-28T01:00:00+00:00": 0.29274, "2019-07-28T02:00:00+00:00": 0.27203}');
+        fetchMock.mockResponse('{"2019-07-27T23:00:00+00:00": 0.29274, "2019-07-28T00:00:00+00:00": 0.27203}');
         const store = {
             consumptions: [],
         };

@@ -53,7 +53,10 @@ const formatDate = (date: string): string => {
 const toISOString = (date: string, hour: string): string => {
     const [day, month, year] = date.split('/');
 
-    return `${year}-${month}-${day}T${('0' + hour).slice(-2)}:00:00+00:00`;
+    const dateObj = new Date(`${year}/${month}/${day}`);
+    dateObj.setHours(parseInt(hour));
+
+    return dateObj.toISOString().replace('.000Z', '+00:00');
 };
 
 //actions ----
