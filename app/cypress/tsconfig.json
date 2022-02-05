@@ -10,7 +10,6 @@
         "noImplicitAny": true,
         "strictNullChecks": true,
         "skipLibCheck": true,
-        "types": ["jest"]
-    },
-    "exclude": ["cypress/"]
+        "types": ["cypress", "cypress-file-upload"]
+    }
 }
