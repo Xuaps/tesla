@@ -1,12 +1,12 @@
 import datetime
-import json
+from zoneinfo import ZoneInfo
 from collector import prices
 
 async def test_download_prices():
-    base = datetime.datetime.today()
-    date_list = [base - datetime.timedelta(days=x) for x in range(100)]
+    today = datetime.datetime.today()
+    date = datetime.datetime(year=today.year, month=today.month, day=today.day, hour=0, second=0, tzinfo=ZoneInfo(key='UTC'))
+    data = await prices.getPricesAt(date)
 
-    for date in date_list:
-        data = await prices.getPricesAt(date)
-        with open(date.strftime("%Y-%m-%d") + ".json", 'w') as fp:
-            json.dump({k.isoformat(): v for k, v in data.items()}, fp)
+    print(data)
+    print(date)
+    assert data.get(date, 0) > 0
