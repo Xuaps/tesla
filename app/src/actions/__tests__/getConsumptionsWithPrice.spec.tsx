@@ -7,8 +7,8 @@ describe('Get consumptions with price', () => {
         const price = 123;
         const anyCup = '';
         const anyDate = '23/11/2021';
-        const anyTime = '0';
-        const anotherTime = '1';
+        const anyTime = '1';
+        const anotherTime = '2';
         const consumptions: Consumption[] = [
             { cups: anyCup, date: anyDate, hour: anyTime, consumption: 0, price },
             { cups: anyCup, date: anyDate, hour: anotherTime, consumption: 0, price },

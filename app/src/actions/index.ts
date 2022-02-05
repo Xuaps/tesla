@@ -50,14 +50,16 @@ const formatDate = (date: string): string => {
     return `${year}-${month}-${day}`;
 };
 
-const toISOString = (date: string, hour: string): string => {
+const toISOString = (date: string, hour: number): string => {
     const [day, month, year] = date.split('/');
 
     const dateObj = new Date(`${year}/${month}/${day}`);
-    dateObj.setHours(parseInt(hour));
+    dateObj.setHours(hour);
 
     return dateObj.toISOString().replace('.000Z', '+00:00');
 };
+
+const adjustCNMCHour = (hour: string) => parseInt(hour) - 1;
 
 //actions ----
 const fetchPrices = async (date: string): Promise<Prices> => {
@@ -83,6 +85,6 @@ export const getConsumptionsWithPrice = (consumptions: Consumption[]) => async (
 
     return consumptions.map((consumption) => ({
         ...consumption,
-        price: prices[toISOString(consumption.date, consumption.hour)],
+        price: prices[toISOString(consumption.date, adjustCNMCHour(consumption.hour))],
     }));
 };
