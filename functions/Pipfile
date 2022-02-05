@@ -32,9 +32,13 @@ yarl="1.7.2"
 [dev-packages]
 pytest = "*"
 pytest-asyncio="0.17.2"
+pylint = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.9"
 
 [scripts]
 test = "pytest"
+lint = "pylint src/"
+fixlint = "autopep8 -r --in-place src/"
