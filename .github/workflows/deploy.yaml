@@ -77,9 +77,23 @@ jobs:
       working-directory: ${{ env.APP_PATH }} 
       run: npm run test
 
+  cypress:
+      name: 'Cypress'
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        # Install NPM dependencies, cache them correctly
+        # and run all Cypress tests
+        - name: Cypress run
+          uses: cypress-io/github-action@v2
+          with:
+            build: npm run build
+            start: npm start
+
   provision:
     name: 'Provision infrastructure'
-    needs: [lint, test]
+    needs: [lint, test, cypress]
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
