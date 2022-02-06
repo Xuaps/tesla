@@ -1,5 +1,3 @@
-name: 'Terraform'
- 
 on:
   push:
     branches:
@@ -89,6 +87,7 @@ jobs:
         # and run all Cypress tests
         - name: Cypress run
           uses: cypress-io/github-action@v2
+ p
           with:
             working-directory: ${{ env.APP_PATH }} 
             build: npm run build
