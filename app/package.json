@@ -11,6 +11,7 @@
         "test": "TZ=CET jest",
         "test:watch": "TZ=CET jest --watch",
         "cypress:open": "TZ=CEST cypress open",
+        "cypress:run": "TZ=CEST cypress run",
         "prepare": "#husky install",
         "typecheck": "tsc --noEmit",
         "typecheck:watch": "npm run typecheck -- --watch"
