@@ -96,7 +96,7 @@ jobs:
           if: failure()
           with:
             name: cypress-screenshots
-            path: cypress/screenshots
+            path: app/cypress/screenshots
 
   lint-functions:
     name: 'Lint Functions'
