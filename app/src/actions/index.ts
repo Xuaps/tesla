@@ -9,11 +9,12 @@ export type Data = {
 };
 
 export type Consumption = {
-    cups: string;
-    date: string;
-    hour: string;
-    consumption: number;
-    price: number | null;
+    [date: string]: {
+        [k: number]: {
+            consumption: number;
+            cost: number | null;
+        };
+    };
 };
 
 export type Prices = {
@@ -32,16 +33,17 @@ export const parseCSV = (file: File) => () => {
     });
 };
 
-export const toConsumptions = (data: Data[]): Consumption[] => {
-    return data.map((row) => {
-        return {
-            cups: row.CUPS,
-            date: row.Fecha,
-            hour: row.Hora,
-            consumption: parseFloat(row.Consumo.replace(',', '.')),
-            price: null,
-        };
-    });
+export const toConsumptions = (data: Data[]): Consumption => {
+    return data.reduce(
+        (acc, row) => ({
+            ...acc,
+            [row.Fecha]: {
+                ...(acc[row.Fecha] || {}),
+                [row.Hora]: { consumption: parseFloat(row.Consumo.replace(',', '.')), amount: null },
+            },
+        }),
+        {} as Consumption,
+    );
 };
 
 const formatDate = (date: string): string => {
@@ -61,6 +63,11 @@ const toISOString = (date: string, hour: number): string => {
 
 const adjustCNMCHour = (hour: string) => parseInt(hour) - 1;
 
+const pricesSearcher = (prices: Prices[]) => {
+    const pricesFlattened = prices.reduce((acc, price) => ({ ...acc, ...price }), {} as Prices);
+    return (date: string, hour: string): number => pricesFlattened[toISOString(date, adjustCNMCHour(hour))];
+};
+
 //actions ----
 const fetchPrices = async (date: string): Promise<Prices> => {
     const response = await fetch(`prices/2.0TD/${formatDate(date)}.json`);
@@ -72,19 +79,28 @@ const fetchPrices = async (date: string): Promise<Prices> => {
     }
 };
 
-export const getConsumptionsWithPrice = (consumptions: Consumption[]) => async () => {
-    const dates = consumptions.reduce((acc: string[], c) => {
-        if (acc.indexOf(c.date) > -1) return acc;
-        return [...acc, c.date];
-    }, []);
-
-    const prices = (await Promise.all(dates.map((date) => fetchPrices(date)))).reduce(
-        (acc, price) => ({ ...acc, ...price }),
-        {},
-    );
-
-    return consumptions.map((consumption) => ({
-        ...consumption,
-        price: prices[toISOString(consumption.date, adjustCNMCHour(consumption.hour))],
-    }));
+export const getConsumptionsWithPrice = (consumptions: Consumption) => async () => {
+    return Promise.all(Object.keys(consumptions).map(fetchPrices)).then((prices) => {
+        const lookupPrices = pricesSearcher(prices);
+        return Object.keys(consumptions).reduce((acc, date) => {
+            return {
+                ...acc,
+                [date]: {
+                    ...acc[date],
+                    ...Object.keys(acc[date]).reduce(
+                        (acc, hour) => ({
+                            ...acc,
+                            [parseInt(hour)]: {
+                                ...acc[parseInt(hour)],
+                                cost:
+                                    lookupPrices(date, hour) &&
+                                    lookupPrices(date, hour) * acc[parseInt(hour)].consumption,
+                            },
+                        }),
+                        acc[date],
+                    ),
+                },
+            };
+        }, consumptions);
+    });
 };
