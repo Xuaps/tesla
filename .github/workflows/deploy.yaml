@@ -92,6 +92,12 @@ jobs:
             build: npm run build
             start: npm start
 
+        - uses: actions/upload-artifact@v2
+          if: failure()
+          with:
+            name: cypress-screenshots
+            path: cypress/screenshots
+
   lint-functions:
     name: 'Lint Functions'
     runs-on: ubuntu-latest
