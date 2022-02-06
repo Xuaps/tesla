@@ -10,7 +10,7 @@
         "lint:fix": "eslint --ext .ts --ext .tsx --fix .",
         "test": "TZ=CET jest",
         "test:watch": "TZ=CET jest --watch",
-        "cypress:open": "cypress open",
+        "cypress:open": "TZ=CEST cypress open",
         "prepare": "#husky install",
         "typecheck": "tsc --noEmit",
         "typecheck:watch": "npm run typecheck -- --watch"
