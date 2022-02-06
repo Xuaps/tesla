@@ -12,7 +12,7 @@ export type Consumption = {
     [date: string]: {
         [k: number]: {
             consumption: number;
-            cost: number | null;
+            cost: number | undefined;
         };
     };
 };
@@ -35,14 +35,14 @@ export const parseCSV = (file: File) => () => {
 
 export const toConsumptions = (data: Data[]): Consumption => {
     return data.reduce(
-        (acc, row) => ({
+        (acc: Consumption, row) => ({
             ...acc,
             [row.Fecha]: {
                 ...(acc[row.Fecha] || {}),
-                [row.Hora]: { consumption: parseFloat(row.Consumo.replace(',', '.')), amount: null },
+                [row.Hora]: { consumption: parseFloat(row.Consumo.replace(',', '.')) },
             },
         }),
-        {} as Consumption,
+        {},
     );
 };
 

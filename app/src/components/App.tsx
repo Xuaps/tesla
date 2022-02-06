@@ -1,12 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import us from '../user-stories';
-import { Store } from '../documents';
+import { EMPTY_STORE, Store } from '../documents';
 import Consumptions from './Consumptions';
 import './App.css';
+import Summary from './Summary';
 
 const App = () => {
-    const [store, setStore] = useState<Store | {}>({});
+    const [store, setStore] = useState<Store>(EMPTY_STORE);
 
     const fileLoaded = async (e: ChangeEvent<HTMLInputElement>) => {
         if (!e || !e.target || !e.target.files) return;
@@ -34,7 +35,8 @@ const App = () => {
                     </Form.Group>
                 </Col>
             </Row>
-            {'consumptions' in store && <Consumptions consumptions={store.consumptions} />}
+            <Consumptions consumptions={store.consumptions} />
+            <Summary consumptions={store.consumptions} />
         </Container>
     );
 };
