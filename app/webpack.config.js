@@ -1,7 +1,8 @@
+const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
-module.exports = {
+module.exports = ({ env }) => ({
     entry: './src/index.ts',
     devtool: 'source-map',
     mode: 'development',
@@ -36,10 +37,13 @@ module.exports = {
         },
     },
     plugins: [
+        new Dotenv({
+            path: `./.env.${env}`,
+        }),
         new HtmlWebpackPlugin({
             template: 'public/index.html',
             hash: true, // cache busting
             filename: '../dist/index.html',
         }),
     ],
-};
+});
