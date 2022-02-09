@@ -1,5 +1,13 @@
 #!/bin/sh
 #. "$(dirname "$0")/_/husky.sh"
 
-#npx lint-staged
-#npm test
+cd app
+
+npm run typecheck
+npm run test
+npx lint-staged
+
+cd ../functions
+
+pipenv run test -v
+pipenv run lint -v

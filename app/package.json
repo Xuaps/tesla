@@ -12,7 +12,7 @@
         "test:watch": "TZ=CET jest --watch",
         "cypress:open": "TZ=CEST cypress open",
         "cypress:run": "TZ=CEST cypress run",
-        "prepare": "#husky install",
+        "prepare": "cd .. && husky install",
         "typecheck": "tsc --noEmit",
         "typecheck:watch": "npm run typecheck -- --watch"
     },
@@ -51,7 +51,7 @@
         "webpack-dev-server": "^4.6.0"
     },
     "lint-staged": {
-        "*.{ts}": [
+        "*.{ts,tsx}": [
             "eslint --fix"
         ]
     },
