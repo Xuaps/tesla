@@ -73,6 +73,15 @@ const consumptionSearcher =
   (date: string, hour: string): number =>
     consumptions[date][parseInt(hour)].consumption;
 
+export const groupConsumptionByDate = (consumptions: Consumption): { name: string; data: number[] }[] =>
+  Object.keys(consumptions).map((date) => {
+    const endHour = Math.max(...Object.keys(consumptions[date]).map((h) => parseInt(h)));
+    return {
+      name: date,
+      data: new Array(endHour).fill(0).map((_, index) => consumptions[date][index + 1]?.consumption),
+    };
+  });
+
 //actions ----
 const fetchPrices = async (date: string): Promise<Prices> => {
   const response = await fetch(`prices/2.0TD/${formatDate(date)}.json`);
