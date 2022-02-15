@@ -5,40 +5,42 @@ import { EMPTY_STORE, Store } from '../documents';
 import Consumptions from './Consumptions';
 import './App.css';
 import Summary from './Summary';
+import { useTranslation } from 'react-i18next';
 
 const App = () => {
-    const [store, setStore] = useState<Store>(EMPTY_STORE);
+  const [store, setStore] = useState<Store>(EMPTY_STORE);
+  const { t } = useTranslation();
 
-    const fileLoaded = async (e: ChangeEvent<HTMLInputElement>) => {
-        if (!e || !e.target || !e.target.files) return;
+  const fileLoaded = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e || !e.target || !e.target.files) return;
 
-        const newStore = await us.updateConsumptions(store, e.target.files[0]);
-        setStore(newStore);
-    };
+    const newStore = await us.updateConsumptions(store, e.target.files[0]);
+    setStore(newStore);
+  };
 
-    return (
-        <Container className="App">
-            <Row>
-                <Col>
-                    <h1> Visualiza tu consumo </h1>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <Form.Group as={Row} controlId="formFile" className="mb-3">
-                        <Form.Label column sm="4">
-                            Consumo en formato CNMC:
-                        </Form.Label>
-                        <Col sm="8">
-                            <Form.Control type="file" onChange={fileLoaded} />
-                        </Col>
-                    </Form.Group>
-                </Col>
-            </Row>
-            <Consumptions consumptions={store.consumptions} />
-            <Summary consumptions={store.consumptions} />
-        </Container>
-    );
+  return (
+    <Container className="App">
+      <Row>
+        <Col>
+          <h1>{t('welcome')} </h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form.Group as={Row} controlId="formFile" className="mb-3">
+            <Form.Label column sm="4">
+              {t('uploader_welcome')}
+            </Form.Label>
+            <Col sm="8">
+              <Form.Control type="file" onChange={fileLoaded} />
+            </Col>
+          </Form.Group>
+        </Col>
+      </Row>
+      <Consumptions consumptions={store.consumptions} />
+      <Summary consumptions={store.consumptions} />
+    </Container>
+  );
 };
 
 export default App;
