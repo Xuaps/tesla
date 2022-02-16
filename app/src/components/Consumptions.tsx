@@ -8,7 +8,9 @@ const Consumptions = ({ consumptions }: { consumptions: Store['consumptions'] })
   <>
     <Row>
       <Col>
-        <Heatmap consumptions={groupConsumptionByDate(consumptions)} />
+        <div data-cy="heatmap">
+          <Heatmap consumptions={groupConsumptionByDate(consumptions)} />
+        </div>
       </Col>
     </Row>
   </>

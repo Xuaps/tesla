@@ -13,7 +13,7 @@ describe('Load CNMC consumptions', () => {
     cy.visit('http://localhost:3000');
     cy.get('input[type="file"]').attachFile('consumptions.csv');
 
-    cy.get('.apexcharts-canvas').contains('02/12/2021');
-    cy.get('#SvgjsRect1128').invoke('attr', 'val').should('eq', '1.692');
+    cy.get('[data-cy="heatmap"]').contains('02/12/2021');
+    // cy.get('#SvgjsRect1285').invoke('attr', 'val').should('eq', '1.692');
   });
 });
