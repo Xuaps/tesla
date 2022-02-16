@@ -2,3 +2,25 @@
   margin: 1rem;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.box {
+  max-height: 444px;
+  box-shadow: 0px 1px 22px -12px #607D8B;
+  background-color: #fff;
+  padding: 25px 35px 25px 30px;
+}
+
+@media screen and (max-width:760px) {
+  .box {
+    padding: 25px 0;
+  }
+}
+
+.sparkboxes .box {
+  padding: 3px 0 0 0;
+  position: relative;
+  padding-top: 15px;
+}
+
+/* overrides */
+.sparkboxes #apexcharts-subtitle-text { fill: #8799a2 !important; }

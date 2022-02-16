@@ -8,6 +8,7 @@ export const resources = {
       welcome: 'Visualiza tu consumo',
       uploader_welcome: 'Consumo en formato CNMC:',
       summary_total_price: 'Precio total energía con peajes:',
+      sparkline_cost: 'Precio total energía',
     },
   },
 };
