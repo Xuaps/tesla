@@ -95,6 +95,12 @@ export const getTotal = (consumptions: Consumption): number =>
     0,
   );
 
+export const getCostByDay = (consumptions: Consumption) => {
+  return Object.keys(consumptions).map((date) =>
+    Object.keys(consumptions[date]).reduce((acc, hour) => acc + (consumptions[date][parseInt(hour)]?.cost || 0), 0),
+  );
+};
+
 //actions ----
 const fetchPrices = async (date: string): Promise<Prices> => {
   const response = await fetch(`prices/2.0TD/${formatDate(date)}.json`);

@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactApexChart, { Props } from 'react-apexcharts';
-import { Consumption } from '../actions';
 
-const SparkLine = ({ consumptions, title }: { consumptions: Consumption; title: string }) => {
+const SparkLine = ({ data, labels, title }: { data: number[]; labels: string[]; title: string }) => {
   const options: Props = {
     stroke: {
       curve: 'straight',
@@ -16,7 +15,7 @@ const SparkLine = ({ consumptions, title }: { consumptions: Consumption; title: 
         enabled: true,
       },
     },
-    labels: new Array(24).fill(0).map((_, n) => `2018-09-0${n + 1}`),
+    labels,
     yaxis: {
       min: 0,
       show: false,
@@ -43,14 +42,7 @@ const SparkLine = ({ consumptions, title }: { consumptions: Consumption; title: 
     },
   };
 
-  return (
-    <ReactApexChart
-      options={options}
-      series={[{ name: title, data: new Array(24).fill(10) }]}
-      type="area"
-      height="160"
-    />
-  );
+  return <ReactApexChart options={options} series={[{ name: title, data }]} type="area" height="160" />;
 };
 
 export default SparkLine;

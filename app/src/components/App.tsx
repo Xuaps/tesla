@@ -41,7 +41,7 @@ const App = () => {
       <Row className="sparkboxes mt-4 mb-4">
         <Col className="md-4">
           <div className="box">
-            <SparkLine consumptions={store.consumptions} title={t('sparkline_cost')} />
+            <SparkLine data={[]} labels={[]} title={t('sparkline_cost')} />
           </div>
         </Col>
         <Col className="md-4"></Col>
