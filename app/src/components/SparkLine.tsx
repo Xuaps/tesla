@@ -1,8 +1,15 @@
 import React from 'react';
-import ReactApexChart, { Props } from 'react-apexcharts';
+import ReactApexChart, { Props as ReactChartProps } from 'react-apexcharts';
 
-const SparkLine = ({ data, labels, title }: { data: number[]; labels: string[]; title: string }) => {
-  const options: Props = {
+type Props = {
+  data: number[];
+  labels: string[];
+  title: string;
+  subtitle: string;
+};
+
+const SparkLine = ({ data, labels, title, subtitle }: Props): JSX.Element => {
+  const options: ReactChartProps = {
     stroke: {
       curve: 'straight',
     },
@@ -25,7 +32,7 @@ const SparkLine = ({ data, labels, title }: { data: number[]; labels: string[]; 
     },
     colors: ['#DCE6EC'],
     title: {
-      text: '0',
+      text: title,
       offsetX: 30,
       style: {
         fontSize: '24px',
@@ -33,7 +40,7 @@ const SparkLine = ({ data, labels, title }: { data: number[]; labels: string[]; 
       },
     },
     subtitle: {
-      text: title,
+      text: subtitle,
       offsetX: 30,
       style: {
         fontSize: '14px',

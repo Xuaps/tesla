@@ -9,6 +9,7 @@ export const resources = {
       uploader_welcome: 'Consumo en formato CNMC:',
       summary_total_price: 'Precio total energía con peajes:',
       sparkline_cost: 'Precio total energía',
+      intlNumber: '{{val, number}}',
     },
   },
 };

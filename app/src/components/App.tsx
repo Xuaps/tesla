@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import './App.css';
 import SparkLine from './SparkLine';
 import Summary from './Summary';
-import { getCostByDay, getDates } from '../actions';
+import { getCostByDay, getDates, getTotal } from '../actions';
 
 const App = () => {
   const [store, setStore] = useState<Store>(EMPTY_STORE);
@@ -41,11 +41,12 @@ const App = () => {
       </Row>
       <Row className="sparkboxes mt-4 mb-4">
         <Col className="md-4">
-          <div className="box">
+          <div className="box" data-cy="total-price">
             <SparkLine
               data={getCostByDay(store.consumptions)}
               labels={getDates(store.consumptions)}
-              title={t('sparkline_cost')}
+              title={t('intlNumber', { val: getTotal(store.consumptions) })}
+              subtitle={t('sparkline_cost')}
             />
           </div>
         </Col>
@@ -53,7 +54,6 @@ const App = () => {
         <Col className="md-4"></Col>
       </Row>
       <Consumptions consumptions={store.consumptions} />
-      <Summary consumptions={store.consumptions} />
     </Container>
   );
 };

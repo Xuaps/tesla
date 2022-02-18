@@ -13,6 +13,6 @@ describe('Load CNMC consumptions', () => {
     cy.visit('http://localhost:3000');
     cy.get('input[type="file"]').attachFile('consumptions.csv');
 
-    cy.get('[data-cy="summary"]').contains('26,48');
+    cy.get('[data-cy="total-price"]').contains('26,48');
   });
 });

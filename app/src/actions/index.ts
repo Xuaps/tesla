@@ -83,16 +83,20 @@ export const groupConsumptionByDate = (consumptions: Consumption): { name: strin
   });
 
 export const getTotal = (consumptions: Consumption): number =>
-  Object.keys(consumptions).reduce(
-    (acc, date) =>
-      acc +
-      Object.keys(consumptions[date]).reduce((acc, hour) => {
-        const cost = consumptions[date][parseInt(hour)].cost;
-        if (cost === undefined) throw new Error(`Missing cost for ${date}:${hour}`);
+  parseFloat(
+    Object.keys(consumptions)
+      .reduce(
+        (acc, date) =>
+          acc +
+          Object.keys(consumptions[date]).reduce((acc, hour) => {
+            const cost = consumptions[date][parseInt(hour)].cost;
+            if (cost === undefined) throw new Error(`Missing cost for ${date}:${hour}`);
 
-        return acc + cost;
-      }, 0),
-    0,
+            return acc + cost;
+          }, 0),
+        0,
+      )
+      .toFixed(2),
   );
 
 export const getCostByDay = (consumptions: Consumption): number[] => {
