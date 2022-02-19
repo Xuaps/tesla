@@ -1,10 +1,10 @@
 import 'regenerator-runtime/runtime';
 import { task } from 'fp-ts';
 import { pipe } from 'fp-ts/function';
-import { parseCSV, getConsumptionsWithPrice, toConsumptions } from '../actions';
-import { updateConsumptionsData, Store } from '../documents';
+import { updateConsumptionsData, Store } from '../store';
+import { getConsumptionsWithPrice, parseCSV, toConsumptions } from '../model';
 
-export const updateConsumptions = async (store: Store, file: File): Promise<Store> => {
+export const updateConsumptions = (store: Store, file: File): Promise<Store> => {
   return pipe(
     task.of(file),
     task.chain(parseCSV),

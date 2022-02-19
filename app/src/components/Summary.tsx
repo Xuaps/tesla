@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getTotalCost } from '../actions';
-import { Store } from '../documents';
+import { getTotalCost } from '../model';
+import { Store } from '../store';
 
 const Summary = ({ consumptions }: { consumptions: Store['consumptions'] }) => {
   const { t } = useTranslation();

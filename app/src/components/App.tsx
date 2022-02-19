@@ -1,16 +1,14 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import us from '../user-stories';
-import { EMPTY_STORE, Store } from '../documents';
+import { EMPTY_STORE, Store } from '../store';
 import Consumptions from './Consumptions';
 import { useTranslation } from 'react-i18next';
 import './App.css';
-import SparkLine from './SparkLine';
-import { getConsumptionByDay, getCostByDay, getDates, getTotalCost, getTotalConsumption } from '../actions';
 import TotalConsumption from './TotalConsumption';
 import TotalCost from './TotalCost';
 
-const App = () => {
+const App = (): JSX.Element => {
   const [store, setStore] = useState<Store>(EMPTY_STORE);
   const { t } = useTranslation();
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { Consumption, getConsumptionByDay, getDates, getTotalConsumption } from '../actions';
+import { Consumption, getConsumptionByDay, getDates, getTotalConsumption } from '../model';
 import SparkLine from './SparkLine';
 
 const TotalConsumption = ({ consumptions }: { consumptions: Consumption }): JSX.Element => {

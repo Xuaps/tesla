@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { groupConsumptionByDate } from '../actions';
-import { Store } from '../documents';
+import { groupConsumptionByDate } from '../model';
+import { Store } from '../store';
 import Heatmap from './Heatmap';
 
 const Consumptions = ({ consumptions }: { consumptions: Store['consumptions'] }) => (

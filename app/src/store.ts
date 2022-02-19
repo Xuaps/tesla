@@ -1,4 +1,4 @@
-import { Consumption } from '../actions';
+import { Consumption } from './model';
 
 export type Store = {
   consumptions: Consumption;
