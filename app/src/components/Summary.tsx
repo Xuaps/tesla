@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getTotal } from '../actions';
+import { getTotalCost } from '../actions';
 import { Store } from '../documents';
 
 const Summary = ({ consumptions }: { consumptions: Store['consumptions'] }) => {
@@ -9,7 +9,7 @@ const Summary = ({ consumptions }: { consumptions: Store['consumptions'] }) => {
   return (
     <div className="summary" data-cy="summary">
       {t('summary_total_price')}&nbsp;
-      {getTotal(consumptions).toFixed(2).toString().replace('.', ',')}
+      {getTotalCost(consumptions).toFixed(2).toString().replace('.', ',')}
     </div>
   );
 };

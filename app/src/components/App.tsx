@@ -6,8 +6,7 @@ import Consumptions from './Consumptions';
 import { useTranslation } from 'react-i18next';
 import './App.css';
 import SparkLine from './SparkLine';
-import Summary from './Summary';
-import { getCostByDay, getDates, getTotal } from '../actions';
+import { getConsumptionByDay, getCostByDay, getDates, getTotalCost, getTotalConsumption } from '../actions';
 
 const App = () => {
   const [store, setStore] = useState<Store>(EMPTY_STORE);
@@ -45,12 +44,21 @@ const App = () => {
             <SparkLine
               data={getCostByDay(store.consumptions)}
               labels={getDates(store.consumptions)}
-              title={t('intlNumber', { val: getTotal(store.consumptions) })}
+              title={t('sparkline_cost_title', { val: getTotalCost(store.consumptions) })}
               subtitle={t('sparkline_cost')}
             />
           </div>
         </Col>
-        <Col className="md-4"></Col>
+        <Col className="md-4">
+          <div className="box" data-cy="total-consumption">
+            <SparkLine
+              data={getConsumptionByDay(store.consumptions)}
+              labels={getDates(store.consumptions)}
+              title={t('sparkline_consumption_title', { val: getTotalConsumption(store.consumptions) })}
+              subtitle={t('sparkline_consumption')}
+            />
+          </div>
+        </Col>
         <Col className="md-4"></Col>
       </Row>
       <Consumptions consumptions={store.consumptions} />

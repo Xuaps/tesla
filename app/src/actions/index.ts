@@ -82,7 +82,7 @@ export const groupConsumptionByDate = (consumptions: Consumption): { name: strin
     };
   });
 
-export const getTotal = (consumptions: Consumption): number =>
+export const getTotalCost = (consumptions: Consumption): number =>
   parseFloat(
     Object.keys(consumptions)
       .reduce(
@@ -110,6 +110,32 @@ export const getCostByDay = (consumptions: Consumption): number[] => {
 };
 
 export const getDates = (consumptions: Consumption): string[] => Object.keys(consumptions).map(formatDate);
+
+export const getConsumptionByDay = (consumptions: Consumption): number[] => {
+  return Object.keys(consumptions).map((date) =>
+    parseFloat(
+      Object.keys(consumptions[date])
+        .reduce((acc, hour) => acc + consumptions[date][parseInt(hour)]?.consumption, 0)
+        .toFixed(2),
+    ),
+  );
+};
+
+export const getTotalConsumption = (consumptions: Consumption): number => {
+  return parseFloat(
+    Object.keys(consumptions)
+      .reduce(
+        (acc, date) =>
+          acc +
+          Object.keys(consumptions[date]).reduce((acc, hour) => {
+            const cost = consumptions[date][parseInt(hour)].consumption;
+            return acc + cost;
+          }, 0),
+        0,
+      )
+      .toFixed(2),
+  );
+};
 
 //actions ----
 const fetchPrices = async (date: string): Promise<Prices> => {

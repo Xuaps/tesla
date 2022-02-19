@@ -4,13 +4,12 @@
 }
 
 .box {
-  max-height: 444px;
-  box-shadow: 0px 1px 22px -12px #607D8B;
+  box-shadow: 0px 1px 22px -12px #607d8b;
   background-color: #fff;
   padding: 25px 35px 25px 30px;
 }
 
-@media screen and (max-width:760px) {
+@media screen and (max-width: 760px) {
   .box {
     padding: 25px 0;
   }
@@ -23,4 +22,6 @@
 }
 
 /* overrides */
-.sparkboxes #apexcharts-subtitle-text { fill: #8799a2 !important; }
+.sparkboxes #apexcharts-subtitle-text {
+  fill: #8799a2 !important;
+}

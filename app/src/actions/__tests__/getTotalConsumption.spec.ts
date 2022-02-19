@@ -1,8 +1,8 @@
-import { getTotal } from '..';
+import { getTotalConsumption } from '..';
 import { anyDayConsumption } from './builders';
 
-describe('Get Total', () => {
-  it('should return total cost', () => {
+describe('Get Total consumption', () => {
+  it('should return total consumption', () => {
     const consumptions = anyDayConsumption({
       date: 'anyDate',
       consumptions: {
@@ -11,8 +11,8 @@ describe('Get Total', () => {
         '2': { consumption: 4.789, cost: 3.877868 },
       },
     });
-    const totalCost = getTotal(consumptions);
+    const totalCost = getTotalConsumption(consumptions);
 
-    expect(totalCost).toBe(8.43);
+    expect(totalCost).toBe(11.7);
   });
 });

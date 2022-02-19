@@ -15,5 +15,7 @@ describe('Load CNMC consumptions', () => {
 
     cy.get('[data-cy="heatmap"]').contains('02/12/2021');
     // cy.get('#SvgjsRect1285').invoke('attr', 'val').should('eq', '1.692');
+    cy.get('[data-cy="total-price"]').contains('26,48');
+    cy.get('[data-cy="total-consumption"]').contains('215,3');
   });
 });
