@@ -4,9 +4,15 @@ export type Prices = {
   [key: string]: number;
 };
 
-export const pricesSearcher = (prices: Prices[]): ((date: string, hour: string) => number) => {
-  const pricesFlattened = prices.reduce((acc, price) => ({ ...acc, ...price }), {} as Prices);
-  return (date: string, hour: string): number => pricesFlattened[toISOString(date, adjustCNMCHour(hour))];
+export const pricesSearcher = (
+  prices: Prices[],
+): ((date: string, hour: string) => number) => {
+  const pricesFlattened = prices.reduce(
+    (acc, price) => ({ ...acc, ...price }),
+    {} as Prices,
+  );
+  return (date: string, hour: string): number =>
+    pricesFlattened[toISOString(date, adjustCNMCHour(hour))];
 };
 
 export const fetchPrices = async (date: string): Promise<Prices> => {

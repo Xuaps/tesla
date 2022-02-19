@@ -4,7 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { Consumption, getCostByDay, getDates, getTotalCost } from '../model';
 import SparkLine from './SparkLine';
 
-const TotalCost = ({ consumptions }: { consumptions: Consumption }): JSX.Element => {
+const TotalCost = ({
+  consumptions,
+}: {
+  consumptions: Consumption;
+}): JSX.Element => {
   const { t } = useTranslation();
   return (
     <Col className="md-4">

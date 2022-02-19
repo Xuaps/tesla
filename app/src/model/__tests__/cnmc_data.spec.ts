@@ -68,7 +68,13 @@ describe('toConsumptions', () => {
   });
 });
 
-const anyData = ({ cups = 'cups', date = '20/10/2020', hour = '1', consumption = '0,234', source = 'R' }) => ({
+const anyData = ({
+  cups = 'cups',
+  date = '20/10/2020',
+  hour = '1',
+  consumption = '0,234',
+  source = 'R',
+}) => ({
   CUPS: cups,
   Fecha: date,
   Hora: hour,

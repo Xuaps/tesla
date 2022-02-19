@@ -49,7 +49,14 @@ const SparkLine = ({ data, labels, title, subtitle }: Props): JSX.Element => {
     },
   };
 
-  return <ReactApexChart options={options} series={[{ name: title, data }]} type="area" height="160" />;
+  return (
+    <ReactApexChart
+      options={options}
+      series={[{ name: title, data }]}
+      type="area"
+      height="160"
+    />
+  );
 };
 
 export default SparkLine;

@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { getTotalCost } from '../model';
 import { Store } from '../store';
 
-const Summary = ({ consumptions }: { consumptions: Store['consumptions'] }) => {
+const Summary = ({
+  consumptions,
+}: {
+  consumptions: Store['consumptions'];
+}): JSX.Element => {
   const { t } = useTranslation();
 
   return (

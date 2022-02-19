@@ -8,7 +8,10 @@ export const EMPTY_STORE = {
   consumptions: {},
 };
 
-export const updateConsumptionsData = (store: Store, consumptions: Consumption): Store => ({
+export const updateConsumptionsData = (
+  store: Store,
+  consumptions: Consumption,
+): Store => ({
   ...store,
   consumptions: consumptions,
 });

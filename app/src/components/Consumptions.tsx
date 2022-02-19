@@ -4,7 +4,11 @@ import { groupConsumptionByDate } from '../model';
 import { Store } from '../store';
 import Heatmap from './Heatmap';
 
-const Consumptions = ({ consumptions }: { consumptions: Store['consumptions'] }) => (
+const Consumptions = ({
+  consumptions,
+}: {
+  consumptions: Store['consumptions'];
+}): JSX.Element => (
   <>
     <Row>
       <Col>

@@ -1,4 +1,3 @@
-import fetchMock from 'jest-fetch-mock';
 import { anyDayConsumption } from './builders';
 import {
   groupConsumptionByDate,
@@ -6,10 +5,11 @@ import {
   getTotalConsumption,
   getDates,
   getCostByDay,
-  getConsumptionsWithPrice,
+  addPrices,
   Consumption,
   getConsumptionByDay,
 } from '../consumption';
+import { Prices } from '../prices';
 
 describe('Get consumption by day', () => {
   it('should return consumption by day', () => {
@@ -27,7 +27,6 @@ describe('Get consumption by day', () => {
 
 describe('Get consumptions with price', () => {
   it('should add price for consumption', async () => {
-    fetchMock.mockResponse('{"2021-11-22T23:00:00+00:00": 0.29274, "2021-11-23T00:00:00+00:00": 0.27203}');
     const cost = 123;
     const anyDate = '23/11/2021';
     const anyTime = '1';
@@ -38,7 +37,14 @@ describe('Get consumptions with price', () => {
         [anotherTime]: { consumption: 1, cost },
       },
     };
-    const result = await getConsumptionsWithPrice(consumptions)();
+    const prices: Prices[] = [
+      {
+        '2021-11-22T23:00:00+00:00': 0.29274,
+        '2021-11-23T00:00:00+00:00': 0.27203,
+      },
+    ];
+
+    const result = await addPrices(consumptions)(prices)();
 
     expect(result[anyDate][anyTime].cost).toBe(0.29274);
     expect(result[anyDate][anotherTime].cost).toBe(0.27203);
@@ -48,7 +54,11 @@ describe('Get consumptions with price', () => {
 describe('getCostByDay', () => {
   it('should return the cost grouped by day', () => {
     const mockData = anyDayConsumption({
-      consumptions: { '1': { cost: 2.32333 }, '2': { cost: undefined }, '3': { cost: 4.55665656 } },
+      consumptions: {
+        '1': { cost: 2.32333 },
+        '2': { cost: undefined },
+        '3': { cost: 4.55665656 },
+      },
     });
 
     expect(getCostByDay(mockData)).toEqual([6.88]);
@@ -58,7 +68,11 @@ describe('getCostByDay', () => {
 describe('Get dates', () => {
   it('should get all the dates included in consumptions', () => {
     const mockData = anyDayConsumption({
-      consumptions: { '1': { cost: 2.3 }, '2': { cost: 3.4 }, '3': { cost: 4.5 } },
+      consumptions: {
+        '1': { cost: 2.3 },
+        '2': { cost: 3.4 },
+        '3': { cost: 4.5 },
+      },
     });
 
     expect(getDates(mockData)).toEqual(['2022-02-22']);
@@ -100,14 +114,29 @@ describe('Get Total cost', () => {
 describe('Group consumption by date', () => {
   it('should group hour consumption by date', () => {
     const consumptions = anyDayConsumption({
-      consumptions: { '1': { consumption: 2.345 }, '10': { consumption: 4.567 }, '2': { consumption: 4.789 } },
+      consumptions: {
+        '1': { consumption: 2.345 },
+        '10': { consumption: 4.567 },
+        '2': { consumption: 4.789 },
+      },
     });
     const result = groupConsumptionByDate(consumptions);
 
     expect(result).toStrictEqual([
       {
         name: '22/02/2022',
-        data: [2.345, 4.789, undefined, undefined, undefined, undefined, undefined, undefined, undefined, 4.567],
+        data: [
+          2.345,
+          4.789,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          4.567,
+        ],
       },
     ]);
   });

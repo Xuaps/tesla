@@ -9,6 +9,8 @@ import './i18n';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
-  <Suspense fallback="...">{React.createElement(withAITracking(reactPlugin, App))}</Suspense>,
+  <Suspense fallback="...">
+    {React.createElement(withAITracking(reactPlugin, App))}
+  </Suspense>,
   document.getElementById('root'),
 );

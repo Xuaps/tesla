@@ -1,6 +1,6 @@
 ﻿const consumptions = new window.File(
-    [
-        `CUPS;Fecha;Hora;Consumo;Metodo_obtencion
+  [
+    `CUPS;Fecha;Hora;Consumo;Metodo_obtencion
 ES0022000008946906GP1P;05/11/2021;1;0,149;E
 ES0022000008946906GP1P;05/11/2021;2;0,130;E
 ES0022000008946906GP1P;05/11/2021;3;0,129;E
@@ -673,8 +673,8 @@ ES0022000008946906GP1P;02/12/2021;21;0,207;E
 ES0022000008946906GP1P;02/12/2021;22;0,256;E
 ES0022000008946906GP1P;02/12/2021;23;0,284;E
 ES0022000008946906GP1P;02/12/2021;24;0,252;E`,
-    ],
-    'consumptions.csv',
+  ],
+  'consumptions.csv',
 );
 
 export default consumptions;
