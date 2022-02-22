@@ -12,6 +12,10 @@ export const resources = {
       sparkline_cost_title: '{{val, number}} €',
       sparkline_consumption: 'Energía consumida',
       sparkline_consumption_title: '{{val, number}} kWh',
+      range_punta: 'Potencia punta contratada {{val, number}} kW',
+      range_valle: 'Potencia valle contratada {{val, number}} kW',
+      donut_punta: 'Punta',
+      donut_valle: 'Valle',
     },
   },
 };

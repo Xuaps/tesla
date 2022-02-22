@@ -1,14 +1,15 @@
 // Or async function
 module.exports = async () => {
-    return {
-        testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
-        testEnvironment: 'jsdom',
-        moduleNameMapper: {
-            '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-                '<rootDir>/__mocks__/fileMock.js',
-            '\\.(css|less)$': '<rootDir>/__mocks__/styleMock.js',
-        },
-        setupFilesAfterEnv: ['./jest.setup.js'],
-        testPathIgnorePatterns: ['/cypress/'],
-    };
+  return {
+    testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
+    testEnvironment: 'jsdom',
+    moduleNameMapper: {
+      '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+        '<rootDir>/__mocks__/fileMock.js',
+      '\\.(css|less)$': '<rootDir>/__mocks__/styleMock.js',
+    },
+    setupFilesAfterEnv: ['./jest.setup.js'],
+    testPathIgnorePatterns: ['/cypress/'],
+    coverageReporters: ['json', 'html'],
+  };
 };
