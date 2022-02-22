@@ -4,7 +4,10 @@ describe('Load CNMC consumptions', () => {
       const urlParts = req.url.split('/');
       const date = urlParts[urlParts.length - 1].replace('.json', '');
       const prices = [...(Array(24) as any).keys()].reduce(
-        (acc, hour) => ({ ...acc, [`${date}T${('0' + hour).slice(-2)}:00:00+00:00`]: 0.123 }),
+        (acc, hour) => ({
+          ...acc,
+          [`${date}T${('0' + hour).slice(-2)}:00:00+00:00`]: 0.123,
+        }),
         {},
       );
 
@@ -17,5 +20,6 @@ describe('Load CNMC consumptions', () => {
     // cy.get('#SvgjsRect1285').invoke('attr', 'val').should('eq', '1.692');
     cy.get('[data-cy="total-price"]').contains('26,48');
     cy.get('[data-cy="total-consumption"]').contains('215,3');
+    cy.get('[data-cy="fixed-price"]').contains('9,83');
   });
 });

@@ -1,16 +1,29 @@
 import React from 'react';
 import ReactApexChart, { Props as ReactChartProps } from 'react-apexcharts';
-import { Col, Form, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import {
+  Consumption,
+  getComisionPrice,
+  getDates,
+  getPuntaPrice,
+  getVallePrice,
+  getDaysByYear,
+} from '../model';
 
-const PowerCost = (): JSX.Element => {
+const PowerCost = ({
+  punta,
+  valle,
+  consumptions,
+}: {
+  punta: number;
+  valle: number;
+  consumptions: Consumption;
+}): JSX.Element => {
   const { t } = useTranslation();
   const options: ReactChartProps = {
     dataLabels: {
-      enabled: true,
-      formatter: function (val: string) {
-        return val + '';
-      },
+      enabled: false,
     },
     plotOptions: {
       pie: {
@@ -20,12 +33,27 @@ const PowerCost = (): JSX.Element => {
             total: {
               showAlways: true,
               show: true,
+              label: t('power_cost_total_label'),
+              formatter: function (w: { globals: { seriesTotals: number[] } }) {
+                const {
+                  globals: { seriesTotals },
+                } = w;
+                return t('price', {
+                  val: seriesTotals.reduce((a, b) => {
+                    return a + b;
+                  }, 0),
+                });
+              },
             },
           },
         },
       },
     },
-    labels: [t('donut_valle'), t('donut_punta')],
+    labels: [
+      t('power_cost_valle'),
+      t('power_cost_punta'),
+      t('power_cost_comision'),
+    ],
     yaxis: {
       min: 0,
       show: false,
@@ -34,14 +62,22 @@ const PowerCost = (): JSX.Element => {
       type: 'datetime',
     },
   };
+  const days = getDaysByYear(consumptions);
 
   return (
     <Col className="md-4">
-      <div className="box" data-cy="total-price">
+      <div className="box" data-cy="fixed-price">
         <Row>
           <ReactApexChart
             options={options}
-            series={[15, 85]}
+            series={[
+              getVallePrice(valle, days),
+              getPuntaPrice(punta, days),
+              getComisionPrice(
+                Math.max(valle, punta),
+                getDates(consumptions).length,
+              ),
+            ]}
             type="donut"
             height="160"
           />

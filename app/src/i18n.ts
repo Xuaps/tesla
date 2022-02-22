@@ -6,6 +6,7 @@ export const resources = {
   es: {
     ns1: {
       welcome: 'Visualiza tu consumo',
+      price: '{{val, number}} €',
       uploader_welcome: 'Consumo en formato CNMC:',
       summary_total_price: 'Precio total energía con peajes:',
       sparkline_cost: 'Precio total energía mercado regulado',
@@ -14,8 +15,10 @@ export const resources = {
       sparkline_consumption_title: '{{val, number}} kWh',
       range_punta: 'Potencia punta contratada {{val, number}} kW',
       range_valle: 'Potencia valle contratada {{val, number}} kW',
-      donut_punta: 'Punta',
-      donut_valle: 'Valle',
+      power_cost_punta: 'Punta',
+      power_cost_valle: 'Valle',
+      power_cost_comision: 'Comisión',
+      power_cost_total_label: 'Total término fijo',
     },
   },
 };

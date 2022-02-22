@@ -64,6 +64,20 @@ export const getCostByDay = (consumptions: Consumption): number[] => {
 export const getDates = (consumptions: Consumption): string[] =>
   Object.keys(consumptions).map(formatDate);
 
+export const getDaysByYear = (consumptions: Consumption) =>
+  getDates(consumptions)
+    .map((date) => date.substring(0, 4))
+    .reduce(
+      (acc: { year: string; num: number }[], year: string) => [
+        ...acc,
+        {
+          year,
+          num: acc.find((days) => days.year === year)?.num ?? 1,
+        },
+      ],
+      [],
+    );
+
 export const getConsumptionByDay = (consumptions: Consumption): number[] => {
   return Object.keys(consumptions).map((date) =>
     parseFloat(

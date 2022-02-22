@@ -72,9 +72,13 @@ const App = (): JSX.Element => {
         </Col>
       </Row>
       <Row className="sparkboxes mt-4 mb-4">
-        <TotalCost consumptions={store.consumptions} />
         <TotalConsumption consumptions={store.consumptions} />
-        <PowerCost />
+        <TotalCost consumptions={store.consumptions} />
+        <PowerCost
+          punta={store.config.punta}
+          valle={store.config.valle}
+          consumptions={store.consumptions}
+        />
       </Row>
       <Consumptions consumptions={store.consumptions} />
     </Container>
