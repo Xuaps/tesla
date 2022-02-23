@@ -11,10 +11,21 @@ export type Data = {
 
 export const parseCSV = (file: File) => (): Promise<Data[]> => {
   return new Promise<Data[]>((resolve, reject) => {
-    Papa.parse<Data, File>(file, {
-      header: true,
+    Papa.parse<string[], File>(file, {
+      header: false,
       skipEmptyLines: true,
-      complete: (res) => resolve(res.data),
+      complete: (res) =>
+        resolve(
+          res.data
+            .map((row) => ({
+              CUPS: row[0],
+              Fecha: row[1],
+              Hora: row[2],
+              Consumo: row[3],
+              Metodo_obtencion: row[4],
+            }))
+            .slice(1),
+        ),
       error: reject,
     });
   });

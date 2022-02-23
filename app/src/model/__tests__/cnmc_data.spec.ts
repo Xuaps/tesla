@@ -46,6 +46,30 @@ cups;28/11/2019;4;0,135;R`,
       Metodo_obtencion: 'R',
     });
   });
+
+  it('should return parsed data with any headers name', async () => {
+    const file = new File(
+      [
+        `CUPS;Fecha;Hora;Consumo;Metodo
+cups;28/11/2019;1;0,232;R
+cups;28/11/2019;2;0,201;R
+cups;28/11/2019;3;0,138;R
+cups;28/11/2019;4;0,135;R`,
+      ],
+      'consumptions.csv',
+    );
+
+    const data = await parseCSV(file)();
+
+    expect(data).toHaveLength(4);
+    expect(data[0]).toStrictEqual({
+      CUPS: 'cups',
+      Fecha: '28/11/2019',
+      Hora: '1',
+      Consumo: '0,232',
+      Metodo_obtencion: 'R',
+    });
+  });
 });
 
 describe('toConsumptions', () => {
