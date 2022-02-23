@@ -70,6 +70,30 @@ cups;28/11/2019;4;0,135;R`,
       Metodo_obtencion: 'R',
     });
   });
+
+  it('should return parsed data even if there are empty lines', async () => {
+    const file = new File(
+      [
+        `CUPS;Fecha;Hora;Consumo;Metodo
+cups;28/11/2019;1;0,232;R
+
+cups;28/11/2019;3;0,138;R
+cups;28/11/2019;4;0,135;R`,
+      ],
+      'consumptions.csv',
+    );
+
+    const data = await parseCSV(file)();
+
+    expect(data).toHaveLength(3);
+    expect(data[0]).toStrictEqual({
+      CUPS: 'cups',
+      Fecha: '28/11/2019',
+      Hora: '1',
+      Consumo: '0,232',
+      Metodo_obtencion: 'R',
+    });
+  });
 });
 
 describe('toConsumptions', () => {
