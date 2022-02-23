@@ -5,7 +5,7 @@ export type Consumption = {
   [date: string]: {
     [k: number]: {
       consumption: number;
-      cost: number | undefined;
+      cost?: number;
     };
   };
 };
@@ -30,8 +30,19 @@ export const groupConsumptionByDate = (
     };
   });
 
-export const getTotalCost = (consumptions: Consumption): number =>
-  parseFloat(
+export const COST_NOT_AVAILABLE = 0;
+
+const missingCosts = (consumptions: Consumption): boolean =>
+  Object.keys(consumptions).some((date) =>
+    Object.keys(consumptions[date]).some(
+      (hour) => consumptions[date][parseInt(hour)].cost === undefined,
+    ),
+  );
+
+export const getTotalCost = (consumptions: Consumption): number => {
+  if (missingCosts(consumptions)) return COST_NOT_AVAILABLE;
+
+  return parseFloat(
     Object.keys(consumptions)
       .reduce(
         (acc, date) =>
@@ -47,6 +58,7 @@ export const getTotalCost = (consumptions: Consumption): number =>
       )
       .toFixed(2),
   );
+};
 
 export const getCostByDay = (consumptions: Consumption): number[] => {
   return Object.keys(consumptions).map((date) =>
@@ -120,12 +132,16 @@ export const addPrices =
         [date]: Object.keys(consumptions[date]).reduce(
           (consumptionsByDayWithPrices, hour) => ({
             ...consumptionsByDayWithPrices,
-            [parseInt(hour)]: {
-              consumption: lookupConsumptions(date, hour),
-              cost:
-                lookupPrices(date, hour) &&
-                lookupPrices(date, hour) * lookupConsumptions(date, hour),
-            },
+            [parseInt(hour)]: lookupPrices(date, hour)
+              ? {
+                  consumption: lookupConsumptions(date, hour),
+                  cost:
+                    lookupPrices(date, hour) &&
+                    lookupPrices(date, hour) * lookupConsumptions(date, hour),
+                }
+              : {
+                  consumption: lookupConsumptions(date, hour),
+                },
           }),
           {},
         ),

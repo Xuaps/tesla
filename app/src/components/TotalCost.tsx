@@ -10,13 +10,20 @@ const TotalCost = ({
   consumptions: Consumption;
 }): JSX.Element => {
   const { t } = useTranslation();
+  const totalCost = getTotalCost(consumptions);
   return (
     <Col className="md-4">
       <div className="box" data-cy="total-price">
         <SparkLine
           data={getCostByDay(consumptions)}
           labels={getDates(consumptions)}
-          title={t('sparkline_cost_title', { val: getTotalCost(consumptions) })}
+          title={
+            totalCost
+              ? t('sparkline_cost_title', {
+                  val: totalCost,
+                })
+              : t('not_available')
+          }
           subtitle={t('sparkline_cost')}
         />
       </div>

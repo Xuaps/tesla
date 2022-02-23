@@ -22,4 +22,18 @@ describe('Load CNMC consumptions', () => {
     cy.get('[data-cy="total-consumption"]').contains('215,3');
     cy.get('[data-cy="fixed-price"]').contains('9,83');
   });
+
+  it('shows N/A for consumptiosn without prices', () => {
+    cy.intercept('/prices/2.0TD/*', {
+      statusCode: 404,
+      body: 'Cypress forced 404',
+    });
+    cy.visit('http://localhost:3000');
+    cy.get('input[type="file"]').attachFile('consumptions.csv');
+
+    cy.get('[data-cy="heatmap"]').contains('02/12/2021');
+    cy.get('[data-cy="total-price"]').contains('No disponible');
+    cy.get('[data-cy="total-consumption"]').contains('215,3');
+    cy.get('[data-cy="fixed-price"]').contains('9,83');
+  });
 });

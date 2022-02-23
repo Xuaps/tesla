@@ -8,6 +8,7 @@ import {
   addPrices,
   Consumption,
   getConsumptionByDay,
+  COST_NOT_AVAILABLE,
 } from '../consumption';
 import { Prices } from '../prices';
 
@@ -108,6 +109,20 @@ describe('Get Total cost', () => {
     const totalCost = getTotalCost(consumptions);
 
     expect(totalCost).toBe(8.43);
+  });
+
+  it('should return COST_NOT_AVAILABLE if there is at least one missing value', () => {
+    const consumptions = anyDayConsumption({
+      date: 'anyDate',
+      consumptions: {
+        '1': { consumption: 2.345 },
+        '10': { consumption: 4.567, cost: 2.87786 },
+        '2': { consumption: 4.789, cost: 3.877868 },
+      },
+    });
+    const totalCost = getTotalCost(consumptions);
+
+    expect(totalCost).toBe(COST_NOT_AVAILABLE);
   });
 });
 

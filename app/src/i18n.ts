@@ -7,6 +7,7 @@ export const resources = {
     ns1: {
       welcome: 'Visualiza tu consumo',
       price: '{{val, number}} €',
+      not_available: 'No disponible',
       uploader_welcome: 'Consumo en formato CNMC:',
       summary_total_price: 'Precio total energía con peajes:',
       sparkline_cost: 'Precio total energía mercado regulado',

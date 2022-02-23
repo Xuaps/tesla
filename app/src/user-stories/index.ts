@@ -14,7 +14,10 @@ export const updateConsumptions = (
     task.map(toConsumptions),
     task.chain((consumption) =>
       pipe(
-        () => Promise.all(Object.keys(consumption).map(fetchPrices)),
+        () =>
+          Promise.all(Object.keys(consumption).map(fetchPrices)).catch(
+            () => [],
+          ),
         task.chain((prices) => addPrices(consumption)(prices)),
       ),
     ),
