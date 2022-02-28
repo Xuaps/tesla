@@ -5,6 +5,9 @@ import { ApexOptions } from 'apexcharts';
 const options: ApexOptions = {
   chart: {
     type: 'heatmap',
+    toolbar: {
+      show: false,
+    },
   },
   dataLabels: {
     enabled: false,
