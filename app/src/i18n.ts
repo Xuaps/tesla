@@ -5,7 +5,7 @@ export const defaultNS = 'ns1';
 export const resources = {
   es: {
     ns1: {
-      welcome: 'Visualiza tu consumo',
+      welcome: 'Factura luz',
       price: '{{val, number}} €',
       not_available: 'No disponible',
       uploader_welcome: 'Consumo en formato CNMC:',
@@ -20,6 +20,9 @@ export const resources = {
       power_cost_valle: 'Valle',
       power_cost_comision: 'Comisión',
       power_cost_total_label: 'Total término fijo',
+      nav_bill: '¿Cómo entender la factura?',
+      nav_market: '¿Cómo funciona el mercado?',
+      nav_download: '¿Cómo descargar consumo?',
     },
   },
 };
