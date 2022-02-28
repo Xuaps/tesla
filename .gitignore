@@ -130,3 +130,6 @@ venv/
 
 # vscode
 .vscode
+
+# cypress
+*cypress/videos/*

@@ -71,16 +71,20 @@ const App = (): JSX.Element => {
           />
         </Col>
       </Row>
-      <Row className="sparkboxes mt-4 mb-4">
-        <TotalConsumption consumptions={store.consumptions} />
-        <TotalCost consumptions={store.consumptions} />
-        <PowerCost
-          punta={store.config.punta}
-          valle={store.config.valle}
-          consumptions={store.consumptions}
-        />
-      </Row>
-      <Consumptions consumptions={store.consumptions} />
+      {store !== EMPTY_STORE && (
+        <>
+          <Row className="sparkboxes mt-4 mb-4">
+            <TotalConsumption consumptions={store.consumptions} />
+            <TotalCost consumptions={store.consumptions} />
+            <PowerCost
+              punta={store.config.punta}
+              valle={store.config.valle}
+              consumptions={store.consumptions}
+            />
+          </Row>
+          <Consumptions consumptions={store.consumptions} />
+        </>
+      )}
     </Container>
   );
 };
