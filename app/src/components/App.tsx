@@ -35,7 +35,7 @@ const App = (): JSX.Element => {
       config: { ...store.config, valle: Number(e.target.value) },
     });
   };
-  console.log(process.env.FEATURE_SEGMENTS);
+
   return (
     <Container className="App">
       <Row>
