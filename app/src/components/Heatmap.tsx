@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
+import { Col, Row } from 'react-bootstrap';
+import { Store } from '../store';
+import { groupConsumptionByDate } from '../model';
+import { TFunction, useTranslation } from 'react-i18next';
 
-const options: ApexOptions = {
+const options = (t: TFunction<'ns1', undefined>): ApexOptions => ({
   chart: {
     type: 'heatmap',
     toolbar: {
@@ -14,17 +18,30 @@ const options: ApexOptions = {
   },
   colors: ['#1c3397'],
   title: {
-    text: 'Consumo por día y hora',
+    text: t('heatmap_title'),
   },
-};
+});
 
 const Heatmap = ({
   consumptions,
 }: {
-  consumptions: any[];
-}): JSX.Element | null =>
-  !consumptions.length ? null : (
-    <ReactApexChart options={options} series={consumptions} type="heatmap" />
+  consumptions: Store['consumptions'];
+}): JSX.Element => {
+  const { t } = useTranslation();
+
+  return (
+    <Row>
+      <Col>
+        <div className="box" data-cy="heatmap">
+          <ReactApexChart
+            options={options(t)}
+            series={groupConsumptionByDate(consumptions)}
+            type="heatmap"
+          />
+        </div>
+      </Col>
+    </Row>
   );
+};
 
 export default Heatmap;

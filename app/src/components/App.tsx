@@ -2,12 +2,14 @@ import React, { ChangeEvent, useState } from 'react';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import us from '../user-stories';
 import { EMPTY_STORE, Store } from '../store';
-import Consumptions from './Consumptions';
 import { useTranslation } from 'react-i18next';
 import './App.css';
 import TotalConsumption from './TotalConsumption';
 import TotalCost from './TotalCost';
 import PowerCost from './PowerCost';
+import Heatmap from './Heatmap';
+import Segments from './Segments';
+import * as configcat from 'configcat-js';
 
 const App = (): JSX.Element => {
   const [store, setStore] = useState<Store>(EMPTY_STORE);
@@ -33,7 +35,7 @@ const App = (): JSX.Element => {
       config: { ...store.config, valle: Number(e.target.value) },
     });
   };
-
+  console.log(process.env.FEATURE_SEGMENTS);
   return (
     <Container className="App">
       <Row>
@@ -113,7 +115,10 @@ const App = (): JSX.Element => {
               consumptions={store.consumptions}
             />
           </Row>
-          <Consumptions consumptions={store.consumptions} />
+          <Heatmap consumptions={store.consumptions} />
+          {process.env.FEATURE_SEGMENTS === 'true' && (
+            <Segments consumptions={store.consumptions} />
+          )}
         </>
       )}
     </Container>

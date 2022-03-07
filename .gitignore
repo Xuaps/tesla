@@ -132,4 +132,5 @@ venv/
 .vscode
 
 # cypress
-*cypress/videos/*
+cypress/videos/
+cypress/screenshots/

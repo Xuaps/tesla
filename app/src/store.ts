@@ -8,8 +8,10 @@ export type Store = {
   };
 };
 
+export const EMPTY_CONSUMPTION: Consumption = {};
+
 export const EMPTY_STORE = {
-  consumptions: {},
+  consumptions: EMPTY_CONSUMPTION,
   config: {
     punta: 4.6,
     valle: 4.6,

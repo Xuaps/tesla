@@ -23,6 +23,8 @@ export const resources = {
       nav_bill: '¿Cómo entender la factura?',
       nav_market: '¿Cómo funciona el mercado?',
       nav_download: '¿Cómo descargar consumo?',
+      segments_title: 'Segmentos',
+      heatmap_title: 'Consumo por día y hora',
     },
   },
 };
