@@ -34,8 +34,8 @@ describe('Get consumptions with price', () => {
     const anotherTime = '2';
     const consumptions: Consumption = {
       [anyDate]: {
-        [anyTime]: { consumption: 1, cost, segement: 'average' },
-        [anotherTime]: { consumption: 1, cost, segement: 'average' },
+        [anyTime]: { consumption: 1, cost, segment: 'average' },
+        [anotherTime]: { consumption: 1, cost, segment: 'average' },
       },
     };
     const prices: Prices[] = [
@@ -49,6 +49,34 @@ describe('Get consumptions with price', () => {
 
     expect(result[anyDate][anyTime].cost).toBe(0.29274);
     expect(result[anyDate][anotherTime].cost).toBe(0.27203);
+  });
+
+  it('should assign segment to consumption', async () => {
+    const cost = 123;
+    const anyDate = '23/11/2021';
+    const first = '1';
+    const second = '2';
+    const third = '3';
+    const consumptions: Consumption = {
+      [anyDate]: {
+        [first]: { consumption: 1, cost, segment: 'average' },
+        [second]: { consumption: 1, cost, segment: 'average' },
+        [third]: { consumption: 1, cost, segment: 'average' },
+      },
+    };
+    const prices: Prices[] = [
+      {
+        '2021-11-22T23:00:00+00:00': 0.22274,
+        '2021-11-23T00:00:00+00:00': 0.10203,
+        '2021-11-23T01:00:00+00:00': 0.30203,
+      },
+    ];
+
+    const result = await addPrices(consumptions)(prices)();
+
+    expect(result[anyDate][first].segment).toBe('average');
+    expect(result[anyDate][second].segment).toBe('belowAverage');
+    expect(result[anyDate][third].segment).toBe('aboveAverage');
   });
 });
 

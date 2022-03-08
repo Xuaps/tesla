@@ -1,5 +1,5 @@
 import { formatDate } from './date';
-import { Prices, pricesSearcher } from './prices';
+import { getAveragePrice, Prices, pricesSearcher } from './prices';
 
 export type AVERAGE = 'average';
 export type ABOVE_AVERAGE = 'aboveAverage';
@@ -10,7 +10,7 @@ export type Consumption = {
     [k: number]: {
       consumption: number;
       cost: number;
-      segement: PriceSegment;
+      segment: PriceSegment;
     };
   };
 };
@@ -124,11 +124,23 @@ export const getTotalConsumption = (consumptions: Consumption): number => {
   );
 };
 
+const getPriceSegment = (
+  average: number,
+  consumption: number,
+): PriceSegment => {
+  const margin = average / 10;
+  if (consumption >= average + margin) return 'aboveAverage';
+  if (consumption <= average - margin) return 'belowAverage';
+
+  return 'average';
+};
+
 export const addPrices =
   (consumptions: Consumption) =>
   (prices: Prices[]) =>
   async (): Promise<Consumption> => {
     const lookupPrices = pricesSearcher(prices);
+    const averagePrice = getAveragePrice(prices);
     const lookupConsumptions = consumptionSearcher(consumptions);
 
     return Object.keys(consumptions).reduce((consumptionsWithPrices, date) => {
@@ -143,6 +155,10 @@ export const addPrices =
                   cost:
                     lookupPrices(date, hour) &&
                     lookupPrices(date, hour) * lookupConsumptions(date, hour),
+                  segment: getPriceSegment(
+                    averagePrice,
+                    lookupPrices(date, hour),
+                  ),
                 }
               : {
                   consumption: lookupConsumptions(date, hour),

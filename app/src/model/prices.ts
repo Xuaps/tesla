@@ -65,3 +65,16 @@ export const getComisionPrice = (power: number, days: number) => {
   const total = (power * 3.113 * days) / 365;
   return parseFloat(total.toFixed(2));
 };
+
+export const getAveragePrice = (prices: Prices[]): number => {
+  const pricesFlattened = prices.reduce(
+    (acc, price) => ({ ...acc, ...price }),
+    {} as Prices,
+  );
+  return parseFloat(
+    (
+      Object.values(pricesFlattened).reduce((acc, price) => acc + price, 0) /
+      Object.values(pricesFlattened).length
+    ).toFixed(2),
+  );
+};

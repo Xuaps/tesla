@@ -27,10 +27,12 @@ describe('update consumptions', () => {
         1: {
           consumption: 0.232,
           cost: 0.06791568,
+          segment: 'average',
         },
         2: {
           consumption: 0.201,
           cost: 0.05467803,
+          segment: 'average',
         },
       },
     });
