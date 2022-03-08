@@ -5,7 +5,7 @@ export type Consumption = {
   [date: string]: {
     [k: number]: {
       consumption: number;
-      cost?: number;
+      cost: number;
     };
   };
 };
