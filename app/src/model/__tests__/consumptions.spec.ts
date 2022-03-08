@@ -34,8 +34,8 @@ describe('Get consumptions with price', () => {
     const anotherTime = '2';
     const consumptions: Consumption = {
       [anyDate]: {
-        [anyTime]: { consumption: 1, cost },
-        [anotherTime]: { consumption: 1, cost },
+        [anyTime]: { consumption: 1, cost, segement: 'average' },
+        [anotherTime]: { consumption: 1, cost, segement: 'average' },
       },
     };
     const prices: Prices[] = [

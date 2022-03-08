@@ -1,11 +1,16 @@
 import { formatDate } from './date';
 import { Prices, pricesSearcher } from './prices';
 
+export type AVERAGE = 'average';
+export type ABOVE_AVERAGE = 'aboveAverage';
+export type BELOW_AVERAGE = 'belowAverage';
+export type PriceSegment = AVERAGE | ABOVE_AVERAGE | BELOW_AVERAGE;
 export type Consumption = {
   [date: string]: {
     [k: number]: {
       consumption: number;
       cost: number;
+      segement: PriceSegment;
     };
   };
 };
