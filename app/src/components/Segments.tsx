@@ -3,6 +3,7 @@ import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { Col, Row } from 'react-bootstrap';
 import { TFunction, useTranslation } from 'react-i18next';
+import { groupConsumptionBySegment } from '../model';
 import { Store } from '../store';
 
 const options = (t: TFunction<'ns1', undefined>): ApexOptions => ({
@@ -34,6 +35,7 @@ const Segments = ({
   consumptions: Store['consumptions'];
 }): JSX.Element => {
   const { t } = useTranslation();
+  const segments = groupConsumptionBySegment(consumptions);
   return (
     <Row>
       <Col>
@@ -43,28 +45,16 @@ const Segments = ({
             options={options(t)}
             series={[
               {
-                name: 'precio <precio medio - 25%',
-                data: [
-                  [1, 36.4],
-                  [2, 1.7],
-                  [2, 3.7],
-                ],
+                name: t('segments_below_average'),
+                data: segments['belowAverage'],
               },
               {
-                name: 'precio medio -25 % > precio < precio medio + 25%',
-                data: [
-                  [3, 36.4],
-                  [4, 1.7],
-                  [5, 3.7],
-                ],
+                name: t('segments_average'),
+                data: segments['average'],
               },
               {
-                name: 'precio > precio medio + 25%',
-                data: [
-                  [6, 36.4],
-                  [7, 1.7],
-                  [7, 3.7],
-                ],
+                name: t('segments_above_average'),
+                data: segments['aboveAverage'],
               },
             ]}
           />

@@ -25,6 +25,9 @@ export const resources = {
       nav_download: '¿Cómo descargar consumo?',
       segments_title: 'Segmentos',
       heatmap_title: 'Consumo por día y hora',
+      segments_above_average: 'Precio por encima del medio',
+      segments_below_average: 'Precio por debajo del medio',
+      segments_average: 'Precio medio',
     },
   },
 };

@@ -35,6 +35,36 @@ export const groupConsumptionByDate = (
     };
   });
 
+export const groupConsumptionBySegment = (
+  consumptions: Consumption,
+): { [key in PriceSegment]: number[][] } =>
+  Object.keys(consumptions).reduce(
+    (
+      acc: { [key in PriceSegment]: number[][] },
+      date: string,
+    ): { [key in PriceSegment]: number[][] } => ({
+      average: [
+        ...acc.average,
+        ...Object.entries(consumptions[date])
+          .filter(([_, value]) => value.segment === 'average')
+          .map(([key, value]) => [parseInt(key), value.consumption]),
+      ],
+      aboveAverage: [
+        ...acc.average,
+        ...Object.entries(consumptions[date])
+          .filter(([_, value]) => value.segment === 'aboveAverage')
+          .map(([key, value]) => [parseInt(key), value.consumption]),
+      ],
+      belowAverage: [
+        ...acc.average,
+        ...Object.entries(consumptions[date])
+          .filter(([_, value]) => value.segment === 'belowAverage')
+          .map(([key, value]) => [parseInt(key), value.consumption]),
+      ],
+    }),
+    { average: [], aboveAverage: [], belowAverage: [] },
+  );
+
 export const COST_NOT_AVAILABLE = 0;
 
 const missingCosts = (consumptions: Consumption): boolean =>

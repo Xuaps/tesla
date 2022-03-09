@@ -21,8 +21,7 @@ describe('Load CNMC consumptions', () => {
     cy.get('[data-cy="total-price"]').contains('26,48');
     cy.get('[data-cy="total-consumption"]').contains('215,3');
     cy.get('[data-cy="fixed-price"]').contains('9,83');
-    !Cypress.env('CI') &&
-      cy.get('[data-cy="consumption-segments"]').contains('36.0');
+    cy.get('[data-cy="consumption-segments"]').contains('1.769');
   });
 
   it('shows N/A for consumptiosn without prices', () => {

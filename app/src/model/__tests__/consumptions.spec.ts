@@ -9,6 +9,7 @@ import {
   Consumption,
   getConsumptionByDay,
   COST_NOT_AVAILABLE,
+  groupConsumptionBySegment,
 } from '../consumption';
 import { Prices } from '../prices';
 
@@ -151,6 +152,25 @@ describe('Get Total cost', () => {
     const totalCost = getTotalCost(consumptions);
 
     expect(totalCost).toBe(COST_NOT_AVAILABLE);
+  });
+});
+
+describe('Group consumption by segment', () => {
+  it('should group hour consumption by segment', () => {
+    const consumptions = anyDayConsumption({
+      consumptions: {
+        '1': { consumption: 2.345, segment: 'average' },
+        '10': { consumption: 4.567, segment: 'belowAverage' },
+        '2': { consumption: 4.789, segment: 'aboveAverage' },
+      },
+    });
+    const result = groupConsumptionBySegment(consumptions);
+
+    expect(result).toStrictEqual({
+      average: [[1, 2.345]],
+      belowAverage: [[10, 4.567]],
+      aboveAverage: [[2, 4.789]],
+    });
   });
 });
 
