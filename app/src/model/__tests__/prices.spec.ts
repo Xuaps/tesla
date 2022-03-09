@@ -34,15 +34,18 @@ describe('Get comision price', () => {
 
 describe('Get average price', () => {
   it('should return the correct price', () => {
-    const price = getAveragePrice([
-      {
-        '2021-11-22T23:00:00+00:00': 0.22274,
-        '2021-11-23T00:00:00+00:00': 0.10203,
-      },
-      {
-        '2021-11-23T01:00:00+00:00': 0.30203,
-      },
-    ]);
-    expect(price).toBe(0.21);
+    const price = getAveragePrice(
+      [
+        {
+          '2021-11-22T23:00:00+00:00': 0.22274,
+          '2021-11-23T00:00:00+00:00': 0.10203,
+        },
+        {
+          '2021-11-24T01:00:00+00:00': 0.30203,
+        },
+      ],
+      '2021-11-23',
+    );
+    expect(price).toBe(0.16);
   });
 });

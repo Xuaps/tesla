@@ -50,13 +50,13 @@ export const groupConsumptionBySegment = (
           .map(([key, value]) => [parseInt(key), value.consumption]),
       ],
       aboveAverage: [
-        ...acc.average,
+        ...acc.aboveAverage,
         ...Object.entries(consumptions[date])
           .filter(([_, value]) => value.segment === 'aboveAverage')
           .map(([key, value]) => [parseInt(key), value.consumption]),
       ],
       belowAverage: [
-        ...acc.average,
+        ...acc.belowAverage,
         ...Object.entries(consumptions[date])
           .filter(([_, value]) => value.segment === 'belowAverage')
           .map(([key, value]) => [parseInt(key), value.consumption]),
@@ -154,13 +154,10 @@ export const getTotalConsumption = (consumptions: Consumption): number => {
   );
 };
 
-const getPriceSegment = (
-  average: number,
-  consumption: number,
-): PriceSegment => {
-  const margin = average / 10;
-  if (consumption >= average + margin) return 'aboveAverage';
-  if (consumption <= average - margin) return 'belowAverage';
+const getPriceSegment = (average: number, price: number): PriceSegment => {
+  const margin = (25 * average) / 100;
+  if (price >= average + margin) return 'aboveAverage';
+  if (price <= average - margin) return 'belowAverage';
 
   return 'average';
 };
@@ -170,7 +167,6 @@ export const addPrices =
   (prices: Prices[]) =>
   async (): Promise<Consumption> => {
     const lookupPrices = pricesSearcher(prices);
-    const averagePrice = getAveragePrice(prices);
     const lookupConsumptions = consumptionSearcher(consumptions);
 
     return Object.keys(consumptions).reduce((consumptionsWithPrices, date) => {
@@ -186,7 +182,7 @@ export const addPrices =
                     lookupPrices(date, hour) &&
                     lookupPrices(date, hour) * lookupConsumptions(date, hour),
                   segment: getPriceSegment(
-                    averagePrice,
+                    getAveragePrice(prices, date),
                     lookupPrices(date, hour),
                   ),
                 }

@@ -11,8 +11,9 @@ export const pricesSearcher = (
     (acc, price) => ({ ...acc, ...price }),
     {} as Prices,
   );
+
   return (date: string, hour: string): number =>
-    pricesFlattened[toISOString(date, adjustCNMCHour(hour))];
+    pricesFlattened[toISOString(date, adjustCNMCHour(hour))] || 0;
 };
 
 export const fetchPrices = async (date: string): Promise<Prices> => {
@@ -66,15 +67,15 @@ export const getComisionPrice = (power: number, days: number) => {
   return parseFloat(total.toFixed(2));
 };
 
-export const getAveragePrice = (prices: Prices[]): number => {
-  const pricesFlattened = prices.reduce(
-    (acc, price) => ({ ...acc, ...price }),
-    {} as Prices,
-  );
+export const getAveragePrice = (prices: Prices[], date: string): number => {
+  const lookupPrices = pricesSearcher(prices);
+  const datePrices = Array(25)
+    .fill(0)
+    .map((_, index) => lookupPrices(date, index.toString()));
+
+  const total = datePrices.reduce((acc, price) => acc + price, 0);
+
   return parseFloat(
-    (
-      Object.values(pricesFlattened).reduce((acc, price) => acc + price, 0) /
-      Object.values(pricesFlattened).length
-    ).toFixed(2),
+    (total / datePrices.filter((price) => price > 0).length).toFixed(2),
   );
 };

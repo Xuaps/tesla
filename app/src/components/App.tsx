@@ -116,9 +116,7 @@ const App = (): JSX.Element => {
             />
           </Row>
           <Heatmap consumptions={store.consumptions} />
-          {process.env.FEATURE_SEGMENTS === 'true' && (
-            <Segments consumptions={store.consumptions} />
-          )}
+          <Segments consumptions={store.consumptions} />
         </>
       )}
     </Container>
