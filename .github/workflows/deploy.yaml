@@ -252,7 +252,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --overwrite --account-name xuapsstsapoductionwe --auth-mode key -d '$web' -s ./app/dist/.
+            az storage blob upload-batch --account-name xuapsstsapoductionwe --auth-mode key -d '$web' -s ./app/dist/.
 
   deploy-collector:
     name: "Deploy collector"
