@@ -155,7 +155,7 @@ export const getTotalConsumption = (consumptions: Consumption): number => {
 };
 
 const getPriceSegment = (average: number, price: number): PriceSegment => {
-  const margin = (25 * average) / 100;
+  const margin = (10 * average) / 100;
   if (price >= average + margin) return 'aboveAverage';
   if (price <= average - margin) return 'belowAverage';
 
