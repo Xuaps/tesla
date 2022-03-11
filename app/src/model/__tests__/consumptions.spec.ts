@@ -35,8 +35,18 @@ describe('Get consumptions with price', () => {
     const anotherTime = '2';
     const consumptions: Consumption = {
       [anyDate]: {
-        [anyTime]: { consumption: 1, cost, segment: 'average' },
-        [anotherTime]: { consumption: 1, cost, segment: 'average' },
+        [anyTime]: {
+          consumption: 1,
+          cost,
+          segment: 'average',
+          period: 'valle',
+        },
+        [anotherTime]: {
+          consumption: 1,
+          cost,
+          segment: 'average',
+          period: 'valle',
+        },
       },
     };
     const prices: Prices[] = [
@@ -61,14 +71,14 @@ describe('Get consumptions with price', () => {
     const third = '3';
     const consumptions: Consumption = {
       [anyDate]: {
-        [first]: { consumption: 1, cost, segment: 'average' },
-        [second]: { consumption: 1, cost, segment: 'average' },
-        [third]: { consumption: 1, cost, segment: 'average' },
+        [first]: { consumption: 1, cost, segment: 'average', period: 'valle' },
+        [second]: { consumption: 1, cost, segment: 'average', period: 'valle' },
+        [third]: { consumption: 1, cost, segment: 'average', period: 'valle' },
       },
       [otherDate]: {
-        [first]: { consumption: 1, cost, segment: 'average' },
-        [second]: { consumption: 1, cost, segment: 'average' },
-        [third]: { consumption: 1, cost, segment: 'average' },
+        [first]: { consumption: 1, cost, segment: 'average', period: 'valle' },
+        [second]: { consumption: 1, cost, segment: 'average', period: 'valle' },
+        [third]: { consumption: 1, cost, segment: 'average', period: 'valle' },
       },
     };
     const prices: Prices[] = [

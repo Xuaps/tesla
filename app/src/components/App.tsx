@@ -3,13 +3,15 @@ import { Col, Container, Form, Row } from 'react-bootstrap';
 import us from '../user-stories';
 import { EMPTY_STORE, Store } from '../store';
 import { useTranslation } from 'react-i18next';
-import './App.css';
 import TotalConsumption from './TotalConsumption';
 import TotalCost from './TotalCost';
 import PowerCost from './PowerCost';
 import Heatmap from './Heatmap';
 import Segments from './Segments';
-import * as configcat from 'configcat-js';
+import PuntaSummary from './PuntaSummary';
+import './App.css';
+import LlanoSummary from './LlanoSummary';
+import ValleSummary from './ValleSummary';
 
 const App = (): JSX.Element => {
   const [store, setStore] = useState<Store>(EMPTY_STORE);
@@ -115,6 +117,13 @@ const App = (): JSX.Element => {
               consumptions={store.consumptions}
             />
           </Row>
+          {process.env.FEATURE_PERIODS && (
+            <Row className="sparkboxes mt-4 mb-4">
+              <PuntaSummary consumptions={store.consumptions} />
+              <LlanoSummary consumptions={store.consumptions} />
+              <ValleSummary consumptions={store.consumptions} />
+            </Row>
+          )}
           <Heatmap consumptions={store.consumptions} />
           <Segments consumptions={store.consumptions} />
         </>

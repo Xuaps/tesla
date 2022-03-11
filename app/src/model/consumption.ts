@@ -5,12 +5,14 @@ export type AVERAGE = 'average';
 export type ABOVE_AVERAGE = 'aboveAverage';
 export type BELOW_AVERAGE = 'belowAverage';
 export type PriceSegment = AVERAGE | ABOVE_AVERAGE | BELOW_AVERAGE;
+export type Period = 'punta' | 'valle' | 'llano';
 export type Consumption = {
   [date: string]: {
     [k: number]: {
       consumption: number;
       cost: number;
       segment: PriceSegment;
+      period: Period;
     };
   };
 };

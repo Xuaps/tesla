@@ -16,11 +16,14 @@ describe('Load CNMC consumptions', () => {
     cy.visit('http://localhost:3000');
     cy.get('input[type="file"]').attachFile('consumptions.csv');
 
-    cy.get('[data-cy="heatmap"]').contains('02/12/2021');
     // cy.get('#SvgjsRect1285').invoke('attr', 'val').should('eq', '1.692');
     cy.get('[data-cy="total-price"]').contains('26,48');
     cy.get('[data-cy="total-consumption"]').contains('215,3');
     cy.get('[data-cy="fixed-price"]').contains('9,83');
+    cy.get('[data-cy="punta-summary"]').contains('1,23');
+    cy.get('[data-cy="llano-summary"]').contains('1,23');
+    cy.get('[data-cy="valle-summary"]').contains('1,23');
+    cy.get('[data-cy="heatmap"]').contains('02/12/2021');
     cy.get('[data-cy="consumption-segments"]').contains('1.769');
   });
 
