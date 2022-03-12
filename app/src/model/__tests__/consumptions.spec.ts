@@ -10,8 +10,34 @@ import {
   getConsumptionByDay,
   COST_NOT_AVAILABLE,
   groupConsumptionBySegment,
+  filterByPeriod,
 } from '../consumption';
 import { Prices } from '../prices';
+
+describe('Get filtered consumptions', () => {
+  it('should return consumption filtered by period', () => {
+    const mockData = anyDayConsumption({
+      consumptions: {
+        ...anyHourConsumption({ hour: 1, period: 'punta' }),
+        ...anyHourConsumption({ hour: 2, period: 'punta' }),
+        ...anyHourConsumption({ hour: 3, period: 'punta' }),
+        ...anyHourConsumption({ hour: 4, period: 'llano' }),
+        ...anyHourConsumption({ hour: 5, period: 'llano' }),
+        ...anyHourConsumption({ hour: 6, period: 'valle' }),
+      },
+    });
+
+    expect(
+      Object.values(filterByPeriod(mockData, 'punta')['22/02/2022']),
+    ).toHaveLength(3);
+    expect(
+      Object.values(filterByPeriod(mockData, 'llano')['22/02/2022']),
+    ).toHaveLength(2);
+    expect(
+      Object.values(filterByPeriod(mockData, 'valle')['22/02/2022']),
+    ).toHaveLength(1);
+  });
+});
 
 describe('Get consumption by day', () => {
   it('should return consumption by day', () => {

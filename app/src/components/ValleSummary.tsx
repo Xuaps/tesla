@@ -3,6 +3,7 @@ import { Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import {
   Consumption,
+  filterByPeriod,
   getCostByDay,
   getDates,
   getTotalConsumption,
@@ -16,28 +17,18 @@ const ValleSummary = ({
   consumptions: Consumption;
 }): JSX.Element => {
   const { t } = useTranslation();
-  const puntaConsumptions: Consumption = {
-    '2022-01-01': {
-      [0]: {
-        consumption: 0.23,
-        cost: 1.23,
-        segment: 'average',
-        period: 'punta',
-      },
-    },
-  };
-
+  const valleConsumptions: Consumption = filterByPeriod(consumptions, 'valle');
   return (
     <Col className="md-4">
       <div className="box" data-cy="valle-summary">
         <SparkLine
-          data={getCostByDay(puntaConsumptions)}
+          data={getCostByDay(valleConsumptions)}
           labels={getDates(consumptions)}
           title={t('sparkline_valle_title', {
-            val: getTotalCost(puntaConsumptions),
+            val: getTotalCost(valleConsumptions),
           })}
           subtitle={t('sparkline_valle_subtitle', {
-            val: getTotalConsumption(puntaConsumptions),
+            val: getTotalConsumption(valleConsumptions),
           })}
         />
       </div>

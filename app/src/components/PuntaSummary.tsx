@@ -3,6 +3,7 @@ import { Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import {
   Consumption,
+  filterByPeriod,
   getCostByDay,
   getDates,
   getTotalConsumption,
@@ -16,16 +17,7 @@ const PuntaSummary = ({
   consumptions: Consumption;
 }): JSX.Element => {
   const { t } = useTranslation();
-  const puntaConsumptions: Consumption = {
-    '2022-01-01': {
-      [0]: {
-        consumption: 0.23,
-        cost: 1.23,
-        segment: 'average',
-        period: 'punta',
-      },
-    },
-  };
+  const puntaConsumptions: Consumption = filterByPeriod(consumptions, 'punta');
 
   return (
     <Col className="md-4">

@@ -224,3 +224,23 @@ export const addPrices =
       };
     }, {});
   };
+
+export const filterByPeriod = (
+  consumptions: Consumption,
+  period: Period,
+): Consumption =>
+  Object.entries(consumptions).reduce(
+    (acc, [date, consumptionsByDay]) => ({
+      ...acc,
+      [date]: Object.entries(consumptionsByDay)
+        .filter((entry) => entry[1].period === period)
+        .reduce(
+          (consumptionsByHour, [hour, consumption]) => ({
+            ...consumptionsByHour,
+            [parseInt(hour)]: consumption,
+          }),
+          {},
+        ),
+    }),
+    {},
+  );

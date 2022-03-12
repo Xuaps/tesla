@@ -117,13 +117,11 @@ const App = (): JSX.Element => {
               consumptions={store.consumptions}
             />
           </Row>
-          {process.env.FEATURE_PERIODS && (
-            <Row className="sparkboxes mt-4 mb-4">
-              <PuntaSummary consumptions={store.consumptions} />
-              <LlanoSummary consumptions={store.consumptions} />
-              <ValleSummary consumptions={store.consumptions} />
-            </Row>
-          )}
+          <Row className="sparkboxes mt-4 mb-4">
+            <PuntaSummary consumptions={store.consumptions} />
+            <LlanoSummary consumptions={store.consumptions} />
+            <ValleSummary consumptions={store.consumptions} />
+          </Row>
           <Heatmap consumptions={store.consumptions} />
           <Segments consumptions={store.consumptions} />
         </>
