@@ -48,19 +48,19 @@ export const groupConsumptionBySegment = (
       average: [
         ...acc.average,
         ...Object.entries(consumptions[date])
-          .filter(([_, value]) => value.segment === 'average')
+          .filter((entry) => entry[1].segment === 'average')
           .map(([key, value]) => [parseInt(key), value.consumption]),
       ],
       aboveAverage: [
         ...acc.aboveAverage,
         ...Object.entries(consumptions[date])
-          .filter(([_, value]) => value.segment === 'aboveAverage')
+          .filter((entry) => entry[1].segment === 'aboveAverage')
           .map(([key, value]) => [parseInt(key), value.consumption]),
       ],
       belowAverage: [
         ...acc.belowAverage,
         ...Object.entries(consumptions[date])
-          .filter(([_, value]) => value.segment === 'belowAverage')
+          .filter((entry) => entry[1].segment === 'belowAverage')
           .map(([key, value]) => [parseInt(key), value.consumption]),
       ],
     }),
@@ -180,15 +180,13 @@ const isAHoliDay = (date: string): boolean =>
 
 const getPeriod = (hour: string, date: string): Period => {
   const hourNumber = parseInt(hour);
-  if (isAHoliDay(date)) return 'valle';
-  if (hourNumber >= 0 && hourNumber < 8) return 'valle';
-  if (hourNumber >= 8 && hourNumber < 10) return 'llano';
-  if (hourNumber >= 10 && hourNumber < 14) return 'punta';
-  if (hourNumber >= 14 && hourNumber < 18) return 'llano';
-  if (hourNumber >= 18 && hourNumber < 22) return 'punta';
-  if (hourNumber >= 22) return 'llano';
+  const valleHours = [1, 2, 3, 4, 5, 6, 7, 8];
+  const llanoHours = [9, 10, 15, 16, 17, 18, 23, 24];
 
-  return 'valle';
+  if (isAHoliDay(date) || valleHours.includes(hourNumber)) return 'valle';
+  if (llanoHours.includes(hourNumber)) return 'llano';
+
+  return 'punta';
 };
 
 export const addPrices =

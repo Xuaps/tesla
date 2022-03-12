@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "jsx": "react",
-        "module": "commonjs",
-        "outDir": "./dist/",
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "skipLibCheck": true,
-        "types": ["jest"]
-    },
-    "exclude": ["cypress/"]
+  "compilerOptions": {
+    "target": "es5",
+    "jsx": "react",
+    "module": "commonjs",
+    "outDir": "./dist/",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "types": ["jest"]
+  },
+  "exclude": ["cypress/"]
 }

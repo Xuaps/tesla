@@ -3,13 +3,15 @@ describe('Load CNMC consumptions', () => {
     cy.intercept('/prices/2.0TD/*', (req) => {
       const urlParts = req.url.split('/');
       const date = urlParts[urlParts.length - 1].replace('.json', '');
-      const prices = [...(Array(24) as any).keys()].reduce(
-        (acc, hour) => ({
-          ...acc,
-          [`${date}T${('0' + hour).slice(-2)}:00:00+00:00`]: 0.123,
-        }),
-        {},
-      );
+      const prices = Array(24)
+        .fill(0)
+        .reduce(
+          (acc, hour) => ({
+            ...acc,
+            [`${date}T${('0' + hour).slice(-2)}:00:00+00:00`]: 0.123,
+          }),
+          {},
+        );
 
       req.reply(prices);
     });

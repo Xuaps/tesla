@@ -4,7 +4,10 @@ import { Period, PriceSegment } from '../consumption';
 export const anyDayConsumption = ({
   date = '22/02/2022',
   consumptions = {},
-}): Consumption => ({
+}: {
+  date?: string;
+  consumptions?: Consumption[string];
+} = {}): Consumption => ({
   [date]: consumptions,
 });
 

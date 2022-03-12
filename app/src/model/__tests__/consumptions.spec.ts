@@ -37,8 +37,8 @@ describe('Get consumptions with price', () => {
   const first = 1;
   const second = 2;
   const third = 3;
-  const llano = 8;
-  const punta = 10;
+  const llano = 9;
+  const punta = 11;
   const consumptions: Consumption = {
     ...anyDayConsumption({
       date: anyDate,
@@ -111,7 +111,7 @@ describe('Get consumptions with price', () => {
     expect(result[otherDate][third].segment).toBe('aboveAverage');
   });
 
-  fit('should assign period to consumption', async () => {
+  it('should assign period to consumption', async () => {
     const result = await addPrices(consumptions)(prices)();
 
     expect(result[anyDate][first].period).toBe('valle');
@@ -128,7 +128,12 @@ describe('getCostByDay', () => {
     const mockData = anyDayConsumption({
       consumptions: {
         ...anyHourConsumption({ hour: 1, cost: 2.32333 }),
-        '2': { cost: undefined },
+        '2': {
+          cost: 0,
+          consumption: 0.12,
+          segment: 'average',
+          period: 'valle',
+        },
         ...anyHourConsumption({ hour: 3, cost: 4.55665656 }),
       },
     });
@@ -186,7 +191,14 @@ describe('Get Total cost', () => {
     const consumptions = anyDayConsumption({
       date: 'anyDate',
       consumptions: {
-        '1': { consumption: 2.345 },
+        '1': {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          cost: undefined as any,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          segment: undefined as any,
+          consumption: 2.345,
+          period: 'valle',
+        },
         ...anyHourConsumption({ hour: 10, consumption: 4.567, cost: 2.87786 }),
         ...anyHourConsumption({ hour: 2, consumption: 4.789, cost: 3.877868 }),
       },
