@@ -21,7 +21,6 @@ export const fetchPrices = async (date: string): Promise<Prices> => {
   try {
     return await response.json();
   } catch {
-    console.log(`Prices for ${date} couldn't be found`);
     return {};
   }
 };
