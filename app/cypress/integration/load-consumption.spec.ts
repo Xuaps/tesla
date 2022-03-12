@@ -6,9 +6,9 @@ describe('Load CNMC consumptions', () => {
       const prices = Array(24)
         .fill(0)
         .reduce(
-          (acc, hour) => ({
+          (acc, _, index) => ({
             ...acc,
-            [`${date}T${('0' + hour).slice(-2)}:00:00+00:00`]: 0.123,
+            [`${date}T${('0' + index).slice(-2)}:00:00+00:00`]: 0.123,
           }),
           {},
         );

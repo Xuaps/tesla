@@ -1,15 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "jsx": "react",
-        "module": "commonjs",
-        "outDir": "./dist/",
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "skipLibCheck": true,
-        "types": ["cypress", "cypress-file-upload"]
-    }
+  "compilerOptions": {
+    "target": "es6",
+    "jsx": "react",
+    "module": "commonjs",
+    "outDir": "./dist/",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "types": ["cypress", "cypress-file-upload"]
+  }
 }
