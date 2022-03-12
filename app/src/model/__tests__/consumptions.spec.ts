@@ -1,4 +1,4 @@
-import { anyDayConsumption } from './builders';
+import { anyDayConsumption, anyHourConsumption } from './builders';
 import {
   groupConsumptionByDate,
   getTotalCost,
@@ -17,9 +17,9 @@ describe('Get consumption by day', () => {
   it('should return consumption by day', () => {
     const mockData = anyDayConsumption({
       consumptions: {
-        '1': { consumption: 2.32333 },
-        '2': { consumption: 4.676 },
-        '3': { consumption: 4.55665656 },
+        ...anyHourConsumption({ hour: 1, consumption: 2.32333 }),
+        ...anyHourConsumption({ hour: 2, consumption: 4.676 }),
+        ...anyHourConsumption({ hour: 3, consumption: 4.55665656 }),
       },
     });
 
@@ -28,70 +28,49 @@ describe('Get consumption by day', () => {
 });
 
 describe('Get consumptions with price', () => {
-  it('should add price for consumption', async () => {
-    const cost = 123;
-    const anyDate = '23/11/2021';
-    const anyTime = '1';
-    const anotherTime = '2';
-    const consumptions: Consumption = {
-      [anyDate]: {
-        [anyTime]: {
-          consumption: 1,
-          cost,
-          segment: 'average',
-          period: 'valle',
-        },
-        [anotherTime]: {
-          consumption: 1,
-          cost,
-          segment: 'average',
-          period: 'valle',
-        },
+  const cost = 123;
+  const anyDate = '23/11/2021';
+  const otherDate = '24/11/2021';
+  const first = 1;
+  const second = 2;
+  const third = 3;
+  const consumptions: Consumption = {
+    ...anyDayConsumption({
+      date: anyDate,
+      consumptions: {
+        ...anyHourConsumption({ hour: first, consumption: 1, cost }),
+        ...anyHourConsumption({ hour: second, consumption: 1, cost }),
+        ...anyHourConsumption({ hour: third, consumption: 1, cost }),
       },
-    };
-    const prices: Prices[] = [
-      {
-        '2021-11-22T23:00:00+00:00': 0.29274,
-        '2021-11-23T00:00:00+00:00': 0.27203,
+    }),
+    ...anyDayConsumption({
+      date: otherDate,
+      consumptions: {
+        ...anyHourConsumption({ hour: first, consumption: 1, cost }),
+        ...anyHourConsumption({ hour: second, consumption: 1, cost }),
+        ...anyHourConsumption({ hour: third, consumption: 1, cost }),
       },
-    ];
+    }),
+  };
+  const prices: Prices[] = [
+    {
+      '2021-11-22T23:00:00+00:00': 0.22274,
+      '2021-11-23T00:00:00+00:00': 0.10203,
+      '2021-11-23T01:00:00+00:00': 0.30203,
+      '2021-11-23T23:00:00+00:00': 0.40274,
+      '2021-11-24T00:00:00+00:00': 0.40203,
+      '2021-11-24T01:00:00+00:00': 0.80203,
+    },
+  ];
 
+  it('should add price for consumption', async () => {
     const result = await addPrices(consumptions)(prices)();
 
-    expect(result[anyDate][anyTime].cost).toBe(0.29274);
-    expect(result[anyDate][anotherTime].cost).toBe(0.27203);
+    expect(result[anyDate][first].cost).toBe(0.22274);
+    expect(result[anyDate][second].cost).toBe(0.10203);
   });
 
-  fit('should assign segment to consumption', async () => {
-    const cost = 123;
-    const anyDate = '23/11/2021';
-    const otherDate = '24/11/2021';
-    const first = '1';
-    const second = '2';
-    const third = '3';
-    const consumptions: Consumption = {
-      [anyDate]: {
-        [first]: { consumption: 1, cost, segment: 'average', period: 'valle' },
-        [second]: { consumption: 1, cost, segment: 'average', period: 'valle' },
-        [third]: { consumption: 1, cost, segment: 'average', period: 'valle' },
-      },
-      [otherDate]: {
-        [first]: { consumption: 1, cost, segment: 'average', period: 'valle' },
-        [second]: { consumption: 1, cost, segment: 'average', period: 'valle' },
-        [third]: { consumption: 1, cost, segment: 'average', period: 'valle' },
-      },
-    };
-    const prices: Prices[] = [
-      {
-        '2021-11-22T23:00:00+00:00': 0.22274,
-        '2021-11-23T00:00:00+00:00': 0.10203,
-        '2021-11-23T01:00:00+00:00': 0.30203,
-        '2021-11-23T23:00:00+00:00': 0.40274,
-        '2021-11-24T00:00:00+00:00': 0.40203,
-        '2021-11-24T01:00:00+00:00': 0.80203,
-      },
-    ];
-
+  it('should assign segment to consumption', async () => {
     const result = await addPrices(consumptions)(prices)();
 
     expect(result[anyDate][first].segment).toBe('average');
@@ -107,9 +86,9 @@ describe('getCostByDay', () => {
   it('should return the cost grouped by day', () => {
     const mockData = anyDayConsumption({
       consumptions: {
-        '1': { cost: 2.32333 },
+        ...anyHourConsumption({ hour: 1, cost: 2.32333 }),
         '2': { cost: undefined },
-        '3': { cost: 4.55665656 },
+        ...anyHourConsumption({ hour: 3, cost: 4.55665656 }),
       },
     });
 
@@ -121,9 +100,9 @@ describe('Get dates', () => {
   it('should get all the dates included in consumptions', () => {
     const mockData = anyDayConsumption({
       consumptions: {
-        '1': { cost: 2.3 },
-        '2': { cost: 3.4 },
-        '3': { cost: 4.5 },
+        ...anyHourConsumption({ hour: 1, cost: 2.3 }),
+        ...anyHourConsumption({ hour: 2, cost: 3.4 }),
+        ...anyHourConsumption({ hour: 3, cost: 4.5 }),
       },
     });
 
@@ -136,9 +115,9 @@ describe('Get Total consumption', () => {
     const consumptions = anyDayConsumption({
       date: 'anyDate',
       consumptions: {
-        '1': { consumption: 2.345, cost: 1.6765675 },
-        '10': { consumption: 4.567, cost: 2.87786 },
-        '2': { consumption: 4.789, cost: 3.877868 },
+        ...anyHourConsumption({ hour: 1, consumption: 2.345, cost: 1.6765675 }),
+        ...anyHourConsumption({ hour: 10, consumption: 4.567, cost: 2.87786 }),
+        ...anyHourConsumption({ hour: 2, consumption: 4.789, cost: 3.877868 }),
       },
     });
     const totalCost = getTotalConsumption(consumptions);
@@ -152,9 +131,9 @@ describe('Get Total cost', () => {
     const consumptions = anyDayConsumption({
       date: 'anyDate',
       consumptions: {
-        '1': { consumption: 2.345, cost: 1.6765675 },
-        '10': { consumption: 4.567, cost: 2.87786 },
-        '2': { consumption: 4.789, cost: 3.877868 },
+        ...anyHourConsumption({ hour: 1, consumption: 2.345, cost: 1.6765675 }),
+        ...anyHourConsumption({ hour: 10, consumption: 4.567, cost: 2.87786 }),
+        ...anyHourConsumption({ hour: 2, consumption: 4.789, cost: 3.877868 }),
       },
     });
     const totalCost = getTotalCost(consumptions);
@@ -167,8 +146,8 @@ describe('Get Total cost', () => {
       date: 'anyDate',
       consumptions: {
         '1': { consumption: 2.345 },
-        '10': { consumption: 4.567, cost: 2.87786 },
-        '2': { consumption: 4.789, cost: 3.877868 },
+        ...anyHourConsumption({ hour: 10, consumption: 4.567, cost: 2.87786 }),
+        ...anyHourConsumption({ hour: 2, consumption: 4.789, cost: 3.877868 }),
       },
     });
     const totalCost = getTotalCost(consumptions);
@@ -181,9 +160,21 @@ describe('Group consumption by segment', () => {
   it('should group hour consumption by segment', () => {
     const consumptions = anyDayConsumption({
       consumptions: {
-        '1': { consumption: 2.345, segment: 'average' },
-        '10': { consumption: 4.567, segment: 'belowAverage' },
-        '2': { consumption: 4.789, segment: 'aboveAverage' },
+        ...anyHourConsumption({
+          hour: 1,
+          consumption: 2.345,
+          segment: 'average',
+        }),
+        ...anyHourConsumption({
+          hour: 10,
+          consumption: 4.567,
+          segment: 'belowAverage',
+        }),
+        ...anyHourConsumption({
+          hour: 2,
+          consumption: 4.789,
+          segment: 'aboveAverage',
+        }),
       },
     });
     const result = groupConsumptionBySegment(consumptions);
@@ -200,9 +191,9 @@ describe('Group consumption by date', () => {
   it('should group hour consumption by date', () => {
     const consumptions = anyDayConsumption({
       consumptions: {
-        '1': { consumption: 2.345 },
-        '10': { consumption: 4.567 },
-        '2': { consumption: 4.789 },
+        ...anyHourConsumption({ hour: 1, consumption: 2.345 }),
+        ...anyHourConsumption({ hour: 10, consumption: 4.567 }),
+        ...anyHourConsumption({ hour: 2, consumption: 4.789 }),
       },
     });
     const result = groupConsumptionByDate(consumptions);
