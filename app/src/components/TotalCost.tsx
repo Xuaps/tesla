@@ -15,16 +15,17 @@ const TotalCost = ({
     <Col className="md-4">
       <div className="box" data-cy="total-price">
         <SparkLine
+          formatter={(val: number) => t('price', { val })}
           data={getCostByDay(consumptions)}
           labels={getDates(consumptions)}
-          title={
+          subtitle={
             totalCost
-              ? t('sparkline_cost_title', {
+              ? t('sparkline_cost_value', {
                   val: totalCost,
                 })
               : t('not_available')
           }
-          subtitle={t('sparkline_cost')}
+          title={t('sparkline_cost')}
         />
       </div>
     </Col>

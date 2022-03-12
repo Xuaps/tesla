@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Consumption,
   filterByPeriod,
-  getCostByDay,
+  getConsumptionByDay,
   getDates,
   getTotalConsumption,
   getTotalCost,
@@ -23,12 +23,13 @@ const PuntaSummary = ({
     <Col className="md-4">
       <div className="box" data-cy="punta-summary">
         <SparkLine
-          data={getCostByDay(puntaConsumptions)}
+          formatter={(val: number) => t('consumption', { val })}
+          data={getConsumptionByDay(puntaConsumptions)}
           labels={getDates(consumptions)}
-          title={t('sparkline_punta_title', {
+          subtitle={t('sparkline_punta_cost', {
             val: getTotalCost(puntaConsumptions),
           })}
-          subtitle={t('sparkline_punta_subtitle', {
+          title={t('sparkline_punta_consumption', {
             val: getTotalConsumption(puntaConsumptions),
           })}
         />

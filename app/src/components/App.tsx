@@ -1,5 +1,12 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import {
+  Col,
+  Container,
+  Dropdown,
+  DropdownButton,
+  Form,
+  Row,
+} from 'react-bootstrap';
 import us from '../user-stories';
 import { EMPTY_STORE, Store } from '../store';
 import { useTranslation } from 'react-i18next';
@@ -41,10 +48,10 @@ const App = (): JSX.Element => {
   return (
     <Container className="App">
       <Row>
-        <Col md={{ span: 4 }}>
+        <Col md={{ span: 3 }}>
           <h1>{t('welcome')} </h1>
         </Col>
-        <Col md={{ span: 8 }}>
+        <Col md={{ span: 9 }}>
           <ul className="nav justify-content-end">
             <li className="nav-item">
               <a
@@ -77,9 +84,18 @@ const App = (): JSX.Element => {
         </Col>
       </Row>
       <Row>
-        <Col md={{ span: 8 }}>
+        <Col md={{ span: 4 }}>
           <Form.Label>{t('uploader_welcome')}</Form.Label>
           <Form.Control type="file" onChange={fileLoaded} />
+        </Col>
+        <Col md={{ span: 4 }}>
+          <Form.Label>{t('fare')}</Form.Label>
+          <DropdownButton
+            id="dropdown-2.0TD-peninsula-sinbs"
+            title={t('2.0TDPeninsulaSin')}
+          >
+            <Dropdown.Item active>{t('2.0TDPeninsulaSin')}</Dropdown.Item>
+          </DropdownButton>
         </Col>
         <Col md={{ span: 2 }}>
           <Form.Label>

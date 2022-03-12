@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Consumption,
   filterByPeriod,
-  getCostByDay,
+  getConsumptionByDay,
   getDates,
   getTotalConsumption,
   getTotalCost,
@@ -23,12 +23,13 @@ const LlanoSummary = ({
     <Col className="md-4">
       <div className="box" data-cy="llano-summary">
         <SparkLine
-          data={getCostByDay(llanoConsumptions)}
+          formatter={(val: number) => t('consumption', { val })}
+          data={getConsumptionByDay(llanoConsumptions)}
           labels={getDates(consumptions)}
-          title={t('sparkline_llano_title', {
+          subtitle={t('sparkline_llano_cost', {
             val: getTotalCost(llanoConsumptions),
           })}
-          subtitle={t('sparkline_llano_subtitle', {
+          title={t('sparkline_llano_consumption', {
             val: getTotalConsumption(llanoConsumptions),
           })}
         />

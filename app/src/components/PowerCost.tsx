@@ -61,6 +61,13 @@ const PowerCost = ({
     xaxis: {
       type: 'datetime',
     },
+    tooltip: {
+      y: {
+        formatter: function (val: number) {
+          return t('price', { val });
+        },
+      },
+    },
   };
   const days = getDaysByYear(consumptions);
 

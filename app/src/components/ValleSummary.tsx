@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Consumption,
   filterByPeriod,
-  getCostByDay,
+  getConsumptionByDay,
   getDates,
   getTotalConsumption,
   getTotalCost,
@@ -22,12 +22,13 @@ const ValleSummary = ({
     <Col className="md-4">
       <div className="box" data-cy="valle-summary">
         <SparkLine
-          data={getCostByDay(valleConsumptions)}
+          formatter={(val: number) => t('consumption', { val })}
+          data={getConsumptionByDay(valleConsumptions)}
           labels={getDates(consumptions)}
-          title={t('sparkline_valle_title', {
+          subtitle={t('sparkline_valle_cost', {
             val: getTotalCost(valleConsumptions),
           })}
-          subtitle={t('sparkline_valle_subtitle', {
+          title={t('sparkline_valle_consumption', {
             val: getTotalConsumption(valleConsumptions),
           })}
         />

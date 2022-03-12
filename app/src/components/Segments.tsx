@@ -27,6 +27,14 @@ const options = (t: TFunction<'ns1', undefined>): ApexOptions => ({
   title: {
     text: t('segments_title'),
   },
+  tooltip: {
+    x: {
+      formatter: (val: number) => t('segments_hour', { val }),
+    },
+    y: {
+      formatter: (val: number) => t('consumption', { val }),
+    },
+  },
 });
 
 const Segments = ({

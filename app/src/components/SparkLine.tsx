@@ -1,14 +1,24 @@
 import React from 'react';
 import ReactApexChart, { Props as ReactChartProps } from 'react-apexcharts';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   data: number[];
   labels: string[];
   title: string;
   subtitle: string;
+  formatter: (value: number) => string;
 };
 
-const SparkLine = ({ data, labels, title, subtitle }: Props): JSX.Element => {
+const SparkLine = ({
+  data,
+  labels,
+  title,
+  subtitle,
+  formatter,
+}: Props): JSX.Element => {
+  const { t } = useTranslation();
+
   const options: ReactChartProps = {
     stroke: {
       curve: 'straight',
@@ -45,6 +55,26 @@ const SparkLine = ({ data, labels, title, subtitle }: Props): JSX.Element => {
       style: {
         fontSize: '14px',
         cssClass: 'apexcharts-yaxis-title',
+      },
+    },
+    tooltip: {
+      x: {
+        formatter: (val: number) => {
+          return t('date', {
+            val: new Date(val),
+            formatParams: {
+              val: {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              },
+            },
+          });
+        },
+      },
+      y: {
+        formatter,
       },
     },
   };

@@ -20,6 +20,15 @@ const options = (t: TFunction<'ns1', undefined>): ApexOptions => ({
   title: {
     text: t('heatmap_title'),
   },
+  tooltip: {
+    y: {
+      formatter: (val: number) => {
+        return t('consumption', {
+          val,
+        });
+      },
+    },
+  },
 });
 
 const Heatmap = ({

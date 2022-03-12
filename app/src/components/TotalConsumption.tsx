@@ -19,12 +19,13 @@ const TotalConsumption = ({
     <Col className="md-4">
       <div className="box" data-cy="total-consumption">
         <SparkLine
+          formatter={(val: number) => t('consumption', { val })}
           data={getConsumptionByDay(consumptions)}
           labels={getDates(consumptions)}
-          title={t('sparkline_consumption_title', {
+          subtitle={t('sparkline_consumption_value', {
             val: getTotalConsumption(consumptions),
           })}
-          subtitle={t('sparkline_consumption')}
+          title={t('sparkline_consumption')}
         />
       </div>
     </Col>
