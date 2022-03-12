@@ -164,6 +164,33 @@ const getPriceSegment = (average: number, price: number): PriceSegment => {
   return 'average';
 };
 
+const isAHoliDay = (date: string): boolean =>
+  [
+    '01/01/2022',
+    '06/01/2022',
+    '15/04/2022',
+    '15/08/2022',
+    '12/10/2022',
+    '01/11/2022',
+    '06/12/2022',
+    '08/12/2022',
+  ].includes(date) ||
+  new Date(formatDate(date)).getDay() === 0 ||
+  new Date(formatDate(date)).getDay() === 6;
+
+const getPeriod = (hour: string, date: string): Period => {
+  const hourNumber = parseInt(hour);
+  if (isAHoliDay(date)) return 'valle';
+  if (hourNumber >= 0 && hourNumber < 8) return 'valle';
+  if (hourNumber >= 8 && hourNumber < 10) return 'llano';
+  if (hourNumber >= 10 && hourNumber < 14) return 'punta';
+  if (hourNumber >= 14 && hourNumber < 18) return 'llano';
+  if (hourNumber >= 18 && hourNumber < 22) return 'punta';
+  if (hourNumber >= 22) return 'llano';
+
+  return 'valle';
+};
+
 export const addPrices =
   (consumptions: Consumption) =>
   (prices: Prices[]) =>
@@ -187,9 +214,11 @@ export const addPrices =
                     getAveragePrice(prices, date),
                     lookupPrices(date, hour),
                   ),
+                  period: getPeriod(hour, date),
                 }
               : {
                   consumption: lookupConsumptions(date, hour),
+                  period: getPeriod(hour, date),
                 },
           }),
           {},

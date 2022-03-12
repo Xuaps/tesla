@@ -29,11 +29,16 @@ describe('Get consumption by day', () => {
 
 describe('Get consumptions with price', () => {
   const cost = 123;
-  const anyDate = '23/11/2021';
-  const otherDate = '24/11/2021';
+  const anyDate = '23/11/2022';
+  const otherDate = '24/11/2022';
+  const extraDate = '25/11/2022';
+  const holyDate = '26/11/2022';
+  const anotherHolyDate = '08/12/2022';
   const first = 1;
   const second = 2;
   const third = 3;
+  const llano = 8;
+  const punta = 10;
   const consumptions: Consumption = {
     ...anyDayConsumption({
       date: anyDate,
@@ -51,15 +56,40 @@ describe('Get consumptions with price', () => {
         ...anyHourConsumption({ hour: third, consumption: 1, cost }),
       },
     }),
+    ...anyDayConsumption({
+      date: extraDate,
+      consumptions: {
+        ...anyHourConsumption({ hour: first, consumption: 1, cost }),
+        ...anyHourConsumption({ hour: llano, consumption: 1, cost }),
+        ...anyHourConsumption({ hour: punta, consumption: 1, cost }),
+      },
+    }),
+    ...anyDayConsumption({
+      date: holyDate,
+      consumptions: {
+        ...anyHourConsumption({ hour: llano, consumption: 1, cost }),
+      },
+    }),
+    ...anyDayConsumption({
+      date: anotherHolyDate,
+      consumptions: {
+        ...anyHourConsumption({ hour: llano, consumption: 1, cost }),
+      },
+    }),
   };
   const prices: Prices[] = [
     {
-      '2021-11-22T23:00:00+00:00': 0.22274,
-      '2021-11-23T00:00:00+00:00': 0.10203,
-      '2021-11-23T01:00:00+00:00': 0.30203,
-      '2021-11-23T23:00:00+00:00': 0.40274,
-      '2021-11-24T00:00:00+00:00': 0.40203,
-      '2021-11-24T01:00:00+00:00': 0.80203,
+      '2022-11-22T23:00:00+00:00': 0.22274,
+      '2022-11-23T00:00:00+00:00': 0.10203,
+      '2022-11-23T01:00:00+00:00': 0.30203,
+      '2022-11-23T23:00:00+00:00': 0.40274,
+      '2022-11-24T00:00:00+00:00': 0.40203,
+      '2022-11-24T01:00:00+00:00': 0.80203,
+      '2022-11-24T23:00:00+00:00': 0.40203,
+      '2022-11-25T07:00:00+00:00': 0.40203,
+      '2022-11-25T09:00:00+00:00': 0.40203,
+      '2022-11-26T07:00:00+00:00': 0.40203,
+      '2022-12-08T07:00:00+00:00': 0.40203,
     },
   ];
 
@@ -79,6 +109,17 @@ describe('Get consumptions with price', () => {
     expect(result[otherDate][first].segment).toBe('belowAverage');
     expect(result[otherDate][second].segment).toBe('belowAverage');
     expect(result[otherDate][third].segment).toBe('aboveAverage');
+  });
+
+  fit('should assign period to consumption', async () => {
+    const result = await addPrices(consumptions)(prices)();
+
+    expect(result[anyDate][first].period).toBe('valle');
+    expect(result[extraDate][first].period).toBe('valle');
+    expect(result[extraDate][llano].period).toBe('llano');
+    expect(result[extraDate][punta].period).toBe('punta');
+    expect(result[anotherHolyDate][llano].period).toBe('valle');
+    expect(result[holyDate][llano].period).toBe('valle');
   });
 });
 
