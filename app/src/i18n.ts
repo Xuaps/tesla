@@ -39,7 +39,11 @@ export const resources = {
       nav_market: '¿Cómo funciona el mercado?',
       nav_download: '¿Cómo descargar consumo?',
       heatmap_title: 'Consumo por día y hora',
+      heatmap_subtitle:
+        'El color indica tu consumo por día y hora, un color más intenso indica mayor consumo. Puedes usar este gráfico para ver tu perfil de consumo, cuando consumes más y cuando menos y si tienes algún electrodoméstico haciendo un consumo irregular cuando no lo esperas.',
       segments_title: 'Todos tus consumos por hora',
+      segments_subtitle:
+        'Cada punto en la misma columna corresponde a la misma hora en un día distinto. El conjunto de puntos más numerosos indica tu consumo habitual a esa hora del día. El color predominante indica el precio al que estás pagando ese consumo. El punto más bajo indica tu consumo mínimo y el punto más alto tu consumo máximo. Analiza si puedes disminuir alguno de los consumos en los precios más altos o moverlos a zonas de precio más bajo.',
       segments_above_average: 'Consumo por encima del precio medio',
       segments_below_average: 'Consumo por debajo del precio medio',
       segments_average: 'Consumo en precio medio',

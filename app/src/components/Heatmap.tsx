@@ -47,6 +47,7 @@ const Heatmap = ({
             series={groupConsumptionByDate(consumptions)}
             type="heatmap"
           />
+          {t('heatmap_subtitle')}
         </div>
       </Col>
     </Row>

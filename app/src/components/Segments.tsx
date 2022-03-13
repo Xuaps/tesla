@@ -66,6 +66,7 @@ const Segments = ({
               },
             ]}
           />
+          {t('segments_subtitle')}
         </div>
       </Col>
     </Row>
