@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Form } from 'react-bootstrap';
+import { useDebounce } from './debounce';
 
 type Props = {
   defaultValue: number;
@@ -21,11 +22,12 @@ const Slider = ({
 }: Props) => {
   const [value, setValue] = useState(defaultValue);
   const [dragging, setDragging] = useState(false);
+  const debounce = useDebounce<number>(onChange, 100);
 
   const handleChange = (newValue: number): void => {
     setValue(newValue);
     if (!dragging) {
-      onChange(newValue);
+      debounce(newValue);
     }
   };
 
@@ -39,6 +41,7 @@ const Slider = ({
         onChange={(e) => handleChange(parseFloat(e.target.value))}
         onMouseDown={() => setDragging(true)}
         onMouseUp={() => {
+          console.log('mouse up');
           setDragging(false);
           onChange(value);
         }}
