@@ -16,7 +16,7 @@ const ErrorPage = () => {
             type="button"
             className="btn m-2 m-md-0 btn-primary"
           >
-            <i className="bi bi-house-door-fill"></i> {t('home')}
+            {t('home')}
           </button>
         </div>
       </div>

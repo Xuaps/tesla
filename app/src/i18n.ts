@@ -14,6 +14,10 @@ export const resources = {
       loading: 'Cargando...',
       not_available: 'No disponible',
       uploader_welcome: 'Consumo en formato CNMC:',
+      start_welcome: 'Entiende tu consumo, optimízalo y empieza a ahorrar',
+      start_description:
+        'Empieza subiendo tu fichero de consumo. Puedes descargarlo visitando la web de tu distribuidora. Recuerda que el fichero debe estar en formato CSV y con el formato de la tabla de consumo de la CNMC.',
+      start_distribuidoras: '¿Cuál es la web de mi distribuidora?',
       summary_total_price: 'Precio total energía con peajes:',
       sparkline_cost: 'Precio energía',
       sparkline_cost_value: '{{val, number}} €',

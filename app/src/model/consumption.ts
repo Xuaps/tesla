@@ -39,29 +39,38 @@ export const groupConsumptionByDate = (
 
 export const groupConsumptionBySegment = (
   consumptions: Consumption,
-): { [key in PriceSegment]: number[][] } =>
+): { [key in PriceSegment]: [number, number][] } =>
   Object.keys(consumptions).reduce(
     (
-      acc: { [key in PriceSegment]: number[][] },
+      acc: { [key in PriceSegment]: [number, number][] },
       date: string,
-    ): { [key in PriceSegment]: number[][] } => ({
+    ): { [key in PriceSegment]: [number, number][] } => ({
       average: [
         ...acc.average,
         ...Object.entries(consumptions[date])
           .filter((entry) => entry[1].segment === 'average')
-          .map(([key, value]) => [parseInt(key), value.consumption]),
+          .map(([key, value]): [number, number] => [
+            parseInt(key),
+            value.consumption,
+          ]),
       ],
       aboveAverage: [
         ...acc.aboveAverage,
         ...Object.entries(consumptions[date])
           .filter((entry) => entry[1].segment === 'aboveAverage')
-          .map(([key, value]) => [parseInt(key), value.consumption]),
+          .map(([key, value]): [number, number] => [
+            parseInt(key),
+            value.consumption,
+          ]),
       ],
       belowAverage: [
         ...acc.belowAverage,
         ...Object.entries(consumptions[date])
           .filter((entry) => entry[1].segment === 'belowAverage')
-          .map(([key, value]) => [parseInt(key), value.consumption]),
+          .map(([key, value]): [number, number] => [
+            parseInt(key),
+            value.consumption,
+          ]),
       ],
     }),
     { average: [], aboveAverage: [], belowAverage: [] },

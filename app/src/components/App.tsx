@@ -16,6 +16,7 @@ import ValleSummary from './ValleSummary';
 import Header from './Header';
 import Configuration from './Configuration';
 import ErrorPage from './Error';
+import StartPage from './Start';
 import './App.css';
 
 const App = (): JSX.Element => {
@@ -70,7 +71,7 @@ const App = (): JSX.Element => {
             &nbsp;{t('loading')}
           </>
         )}
-        {store.consumptions !== EMPTY_CONSUMPTION && (
+        {store.consumptions !== EMPTY_CONSUMPTION ? (
           <>
             <Row className="sparkboxes mt-4 mb-4">
               <TotalConsumption consumptions={store.consumptions} />
@@ -89,6 +90,8 @@ const App = (): JSX.Element => {
             <Heatmap consumptions={store.consumptions} />
             <Segments consumptions={store.consumptions} />
           </>
+        ) : (
+          <StartPage />
         )}
       </AppInsightsErrorBoundary>
     </Container>
