@@ -5,6 +5,8 @@ export const defaultNS = 'ns1';
 export const resources = {
   es: {
     ns1: {
+      unhandled_error: 'Ha ocurrido un error inesperado',
+      home: 'Volver al principio',
       welcome: 'Factura luz',
       price: '{{val, number}} €',
       consumption: '{{val, number}} kWh',

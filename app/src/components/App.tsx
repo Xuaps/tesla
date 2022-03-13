@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
+import { reactPlugin } from '../AppInsights';
 import us from '../user-stories';
 import { EMPTY_CONSUMPTION, EMPTY_STORE, Store } from '../store';
 import TotalConsumption from './TotalConsumption';
@@ -13,6 +15,7 @@ import LlanoSummary from './LlanoSummary';
 import ValleSummary from './ValleSummary';
 import Header from './Header';
 import Configuration from './Configuration';
+import ErrorPage from './Error';
 import './App.css';
 
 const App = (): JSX.Element => {
@@ -48,41 +51,46 @@ const App = (): JSX.Element => {
 
   return (
     <Container className="App">
-      <Header />
-      <Configuration
-        fileLoaded={fileLoaded}
-        updateValle={updateValle}
-        updatePunta={updatePunta}
-        config={store.config}
-      />
-      {isLoading && (
-        <>
-          <Spinner animation="border" variant="primary">
-            <span className="visually-hidden">{t('loading')}</span>
-          </Spinner>
-          &nbsp;{t('loading')}
-        </>
-      )}
-      {store.consumptions !== EMPTY_CONSUMPTION && (
-        <>
-          <Row className="sparkboxes mt-4 mb-4">
-            <TotalConsumption consumptions={store.consumptions} />
-            <TotalCost consumptions={store.consumptions} />
-            <PowerCost
-              punta={store.config.punta}
-              valle={store.config.valle}
-              consumptions={store.consumptions}
-            />
-          </Row>
-          <Row className="sparkboxes mt-4 mb-4">
-            <PuntaSummary consumptions={store.consumptions} />
-            <LlanoSummary consumptions={store.consumptions} />
-            <ValleSummary consumptions={store.consumptions} />
-          </Row>
-          <Heatmap consumptions={store.consumptions} />
-          <Segments consumptions={store.consumptions} />
-        </>
-      )}
+      <AppInsightsErrorBoundary
+        onError={() => <ErrorPage />}
+        appInsights={reactPlugin}
+      >
+        <Header />
+        <Configuration
+          fileLoaded={fileLoaded}
+          updateValle={updateValle}
+          updatePunta={updatePunta}
+          config={store.config}
+        />
+        {isLoading && (
+          <>
+            <Spinner animation="border" variant="primary">
+              <span className="visually-hidden">{t('loading')}</span>
+            </Spinner>
+            &nbsp;{t('loading')}
+          </>
+        )}
+        {store.consumptions !== EMPTY_CONSUMPTION && (
+          <>
+            <Row className="sparkboxes mt-4 mb-4">
+              <TotalConsumption consumptions={store.consumptions} />
+              <TotalCost consumptions={store.consumptions} />
+              <PowerCost
+                punta={store.config.punta}
+                valle={store.config.valle}
+                consumptions={store.consumptions}
+              />
+            </Row>
+            <Row className="sparkboxes mt-4 mb-4">
+              <PuntaSummary consumptions={store.consumptions} />
+              <LlanoSummary consumptions={store.consumptions} />
+              <ValleSummary consumptions={store.consumptions} />
+            </Row>
+            <Heatmap consumptions={store.consumptions} />
+            <Segments consumptions={store.consumptions} />
+          </>
+        )}
+      </AppInsightsErrorBoundary>
     </Container>
   );
 };
