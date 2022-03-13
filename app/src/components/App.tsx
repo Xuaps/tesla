@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Spinner } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import us from '../user-stories';
 import { EMPTY_STORE, Store } from '../store';
 import TotalConsumption from './TotalConsumption';
@@ -16,12 +17,19 @@ import './App.css';
 
 const App = (): JSX.Element => {
   const [store, setStore] = useState<Store>(EMPTY_STORE);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const fileLoaded = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e || !e.target || !e.target.files) return;
 
-    const newStore = await us.updateConsumptions(store, e.target.files[0]);
-    setStore(newStore);
+    setIsLoading(true);
+    const file = e.target.files[0];
+    setTimeout(async () => {
+      const newStore = await us.updateConsumptions(store, file);
+      setIsLoading(false);
+      setStore(newStore);
+    }, 500);
   };
 
   const updatePunta = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +55,14 @@ const App = (): JSX.Element => {
         updatePunta={updatePunta}
         config={store.config}
       />
+      {isLoading && (
+        <>
+          <Spinner animation="border" variant="primary">
+            <span className="visually-hidden">{t('loading')}</span>
+          </Spinner>
+          &nbsp;{t('loading')}
+        </>
+      )}
       {store !== EMPTY_STORE && (
         <>
           <Row className="sparkboxes mt-4 mb-4">
