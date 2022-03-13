@@ -9,6 +9,7 @@ export const resources = {
       price: '{{val, number}} €',
       consumption: '{{val, number}} kWh',
       date: '{{val, datetime}}',
+      loading: 'Cargando...',
       not_available: 'No disponible',
       uploader_welcome: 'Consumo en formato CNMC:',
       summary_total_price: 'Precio total energía con peajes:',
@@ -38,7 +39,7 @@ export const resources = {
       segments_average: 'Consumo en precio medio',
       segments_hour: 'Hora: {{val, number}}',
       fare: 'Seleccione el tipo de tarifa',
-      '2.0TDPeninsulaSin': 'Tarifa 2.0TD Peninsula sin bono social',
+      '2.0TDPeninsulaSin': 'Tarifa 2.0TD peninsula sin bono social',
     },
   },
 };
