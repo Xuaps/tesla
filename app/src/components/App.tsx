@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import us from '../user-stories';
-import { EMPTY_STORE, Store } from '../store';
+import { EMPTY_CONSUMPTION, EMPTY_STORE, Store } from '../store';
 import TotalConsumption from './TotalConsumption';
 import TotalCost from './TotalCost';
 import PowerCost from './PowerCost';
@@ -32,17 +32,17 @@ const App = (): JSX.Element => {
     }, 500);
   };
 
-  const updatePunta = (e: ChangeEvent<HTMLInputElement>) => {
+  const updatePunta = (value: number) => {
     setStore({
       ...store,
-      config: { ...store.config, punta: Number(e.target.value) },
+      config: { ...store.config, punta: value },
     });
   };
 
-  const updateValle = (e: ChangeEvent<HTMLInputElement>) => {
+  const updateValle = (value: number) => {
     setStore({
       ...store,
-      config: { ...store.config, valle: Number(e.target.value) },
+      config: { ...store.config, valle: value },
     });
   };
 
@@ -63,7 +63,7 @@ const App = (): JSX.Element => {
           &nbsp;{t('loading')}
         </>
       )}
-      {store !== EMPTY_STORE && (
+      {store.consumptions !== EMPTY_CONSUMPTION && (
         <>
           <Row className="sparkboxes mt-4 mb-4">
             <TotalConsumption consumptions={store.consumptions} />
