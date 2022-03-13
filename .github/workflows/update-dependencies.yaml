@@ -6,6 +6,94 @@ permissions:
   contents: write
 
 jobs:
+  lint:
+    name: 'Lint App'
+    runs-on: ubuntu-latest
+    environment: production
+ 
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+ 
+    # Checkout the repository to the GitHub Actions runner
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.13.2'
+
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: npm-${{ hashFiles('package-lock.json') }}
+        restore-keys: npm-
+
+    - name: Install dependencies
+      working-directory: ${{ env.APP_PATH }} 
+      run: npm ci --ignore-scripts
+
+    - name: Linter
+      working-directory: ${{ env.APP_PATH }} 
+      run: npm run lint
+
+  test:
+    name: 'Test App'
+    runs-on: ubuntu-latest
+    environment: production
+ 
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+ 
+    # Checkout the repository to the GitHub Actions runner
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.13.2'
+
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: npm-${{ hashFiles('package-lock.json') }}
+        restore-keys: npm-
+
+    - name: Install dependencies
+      working-directory: ${{ env.APP_PATH }} 
+      run: npm ci --ignore-scripts
+
+    - name: Tests
+      working-directory: ${{ env.APP_PATH }} 
+      run: npm run test
+
+  cypress:
+      name: 'E2E App'
+      runs-on: ubuntu-latest
+      environment: production
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        # Install NPM dependencies, cache them correctly
+        # and run all Cypress tests
+        - name: Cypress run
+          uses: cypress-io/github-action@v2
+          with:
+            working-directory: ${{ env.APP_PATH }} 
+            build: npm run build
+            start: npm start
+
+        - uses: actions/upload-artifact@v2
+          if: failure()
+          with:
+            name: cypress-screenshots
+            path: app/cypress/screenshots
+            
   dependabot:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
