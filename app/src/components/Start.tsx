@@ -12,7 +12,6 @@ const StartPage = () => {
         <div className="mt-5">
           <a
             href="https://sede.cnmc.gob.es/listado/censo/1"
-            type="button"
             className="btn m-2 m-md-0 btn-primary"
           >
             {t('start_distribuidoras')}
