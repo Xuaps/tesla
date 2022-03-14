@@ -99,6 +99,8 @@ jobs:
             
   dependabot:
     runs-on: ubuntu-latest
+    needs: [lint, test, cypress]
+    environment: production
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - name: Dependabot metadata
