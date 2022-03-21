@@ -95,7 +95,7 @@ resource "azurerm_storage_account" "sa" {
 
   custom_domain {
     name = "factura.xuaps.com"
-    use_sub_domain = true
+    use_subdomain = true
   }
 }
 
