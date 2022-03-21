@@ -92,6 +92,11 @@ resource "azurerm_storage_account" "sa" {
   static_website {
     index_document = "index.html"
   }
+
+  custom_domain {
+    name = "factura.xuaps.com"
+    use_sub_domain = true
+  }
 }
 
 output "storageAccountName" {
