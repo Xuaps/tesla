@@ -108,6 +108,8 @@ jobs:
         uses: dependabot/fetch-metadata@v1.1.1
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Authenticate cli with a PAT
+        run: echo "${{ secrets.DEPENDABOT_TOKEN }}" | gh auth login --with-token
       - name: Enable auto-merge for Dependabot PRs
         run: gh pr merge --auto --merge "$PR_URL"
         env:
