@@ -7,7 +7,7 @@ export const resources = {
     ns1: {
       unhandled_error: 'Ha ocurrido un error inesperado',
       home: 'Volver al principio',
-      welcome: 'Factura luz',
+      welcome: 'Analiza tu consumo',
       price: '{{val, number}} €',
       consumption: '{{val, number}} kWh',
       date: '{{val, datetime}}',
