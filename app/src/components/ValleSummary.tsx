@@ -7,7 +7,6 @@ import {
   getConsumptionByDay,
   getDates,
   getTotalConsumption,
-  getTotalCost,
 } from '../model';
 import SparkLine from './SparkLine';
 
@@ -25,12 +24,10 @@ const ValleSummary = ({
           formatter={(val: number) => t('consumption', { val })}
           data={getConsumptionByDay(valleConsumptions)}
           labels={getDates(consumptions)}
-          subtitle={t('sparkline_valle_cost', {
-            val: getTotalCost(valleConsumptions),
-          })}
-          title={t('sparkline_valle_consumption', {
+          subtitle={t('sparkline_consumption_value', {
             val: getTotalConsumption(valleConsumptions),
           })}
+          title={t('sparkline_valle_consumption')}
         />
       </div>
     </Col>

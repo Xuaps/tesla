@@ -19,27 +19,11 @@ describe('Load CNMC consumptions', () => {
     cy.get('input[type="file"]').attachFile('consumptions.csv');
 
     // cy.get('#SvgjsRect1285').invoke('attr', 'val').should('eq', '1.692');
-    cy.get('[data-cy="total-price"]').contains('26,48');
     cy.get('[data-cy="total-consumption"]').contains('215,3');
-    cy.get('[data-cy="fixed-price"]').contains('9,83');
-    cy.get('[data-cy="punta-summary"]').contains('6,22');
-    cy.get('[data-cy="llano-summary"]').contains('5,28');
-    cy.get('[data-cy="valle-summary"]').contains('14,99');
+    cy.get('[data-cy="punta-summary"]').contains('50,57');
+    cy.get('[data-cy="llano-summary"]').contains('42,9');
+    cy.get('[data-cy="valle-summary"]').contains('121,84');
     cy.get('[data-cy="heatmap"]').contains('02/12/2021');
     cy.get('[data-cy="consumption-segments"]').contains('1.769');
-  });
-
-  it('shows N/A for consumptiosn without prices', () => {
-    cy.intercept('/prices/2.0TD/*', {
-      statusCode: 404,
-      body: 'Cypress forced 404',
-    });
-    cy.visit('http://localhost:3000');
-    cy.get('input[type="file"]').attachFile('consumptions.csv');
-
-    cy.get('[data-cy="heatmap"]').contains('02/12/2021');
-    cy.get('[data-cy="total-price"]').contains('No disponible');
-    cy.get('[data-cy="total-consumption"]').contains('215,3');
-    cy.get('[data-cy="fixed-price"]').contains('9,83');
   });
 });

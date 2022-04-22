@@ -6,8 +6,6 @@ import { reactPlugin } from '../AppInsights';
 import us from '../user-stories';
 import { EMPTY_CONSUMPTION, EMPTY_STORE, Store } from '../store';
 import TotalConsumption from './TotalConsumption';
-import TotalCost from './TotalCost';
-import PowerCost from './PowerCost';
 import Heatmap from './Heatmap';
 import Segments from './Segments';
 import PuntaSummary from './PuntaSummary';
@@ -36,20 +34,6 @@ const App = (): JSX.Element => {
     }, 500);
   };
 
-  const updatePunta = (value: number) => {
-    setStore({
-      ...store,
-      config: { ...store.config, punta: value },
-    });
-  };
-
-  const updateValle = (value: number) => {
-    setStore({
-      ...store,
-      config: { ...store.config, valle: value },
-    });
-  };
-
   return (
     <Container className="App">
       <AppInsightsErrorBoundary
@@ -57,12 +41,7 @@ const App = (): JSX.Element => {
         appInsights={reactPlugin}
       >
         <Header />
-        <Configuration
-          fileLoaded={fileLoaded}
-          updateValle={updateValle}
-          updatePunta={updatePunta}
-          config={store.config}
-        />
+        <Configuration fileLoaded={fileLoaded} />
         {isLoading && (
           <>
             <Spinner animation="border" variant="primary">
@@ -75,12 +54,6 @@ const App = (): JSX.Element => {
           <>
             <Row className="sparkboxes mt-4 mb-4">
               <TotalConsumption consumptions={store.consumptions} />
-              <TotalCost consumptions={store.consumptions} />
-              <PowerCost
-                punta={store.config.punta}
-                valle={store.config.valle}
-                consumptions={store.consumptions}
-              />
             </Row>
             <Row className="sparkboxes mt-4 mb-4">
               <PuntaSummary consumptions={store.consumptions} />

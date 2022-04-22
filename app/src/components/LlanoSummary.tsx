@@ -7,7 +7,6 @@ import {
   getConsumptionByDay,
   getDates,
   getTotalConsumption,
-  getTotalCost,
 } from '../model';
 import SparkLine from './SparkLine';
 
@@ -26,12 +25,10 @@ const LlanoSummary = ({
           formatter={(val: number) => t('consumption', { val })}
           data={getConsumptionByDay(llanoConsumptions)}
           labels={getDates(consumptions)}
-          subtitle={t('sparkline_llano_cost', {
-            val: getTotalCost(llanoConsumptions),
-          })}
-          title={t('sparkline_llano_consumption', {
+          subtitle={t('sparkline_consumption_value', {
             val: getTotalConsumption(llanoConsumptions),
           })}
+          title={t('sparkline_llano_consumption')}
         />
       </div>
     </Col>
