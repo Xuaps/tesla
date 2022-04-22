@@ -5,9 +5,4 @@ cd app
 
 npm run typecheck &&
 npm run test &&
-npx lint-staged &&
-
-cd ../functions &&
-
-pipenv run test -v &&
-pipenv run lint -v 
+npx lint-staged
