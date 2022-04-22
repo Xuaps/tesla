@@ -17,7 +17,11 @@ export const pricesSearcher = (
 };
 
 export const fetchPrices = async (date: string): Promise<Prices> => {
-  const response = await fetch(`prices/2.0TD/${formatDate(date)}.json`);
+  const response = await fetch(
+    `https://${process.env.PRICE_API_DOMAIN}/prices/2.0TD/${formatDate(
+      date,
+    )}.json`,
+  );
   try {
     return await response.json();
   } catch {
