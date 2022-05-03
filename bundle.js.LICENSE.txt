@@ -24,7 +24,7 @@ License: MIT
  */
 
 /*!
- * Microsoft Dynamic Proto Utility, 1.1.4
+ * Microsoft Dynamic Proto Utility, 1.1.5
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
