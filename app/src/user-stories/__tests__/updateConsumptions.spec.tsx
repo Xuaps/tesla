@@ -26,14 +26,10 @@ describe('update consumptions', () => {
       '28/11/2019': {
         1: {
           consumption: 0.232,
-          cost: 0.06791568,
-          segment: 'average',
           period: 'valle',
         },
         2: {
           consumption: 0.201,
-          cost: 0.05467803,
-          segment: 'average',
           period: 'valle',
         },
       },

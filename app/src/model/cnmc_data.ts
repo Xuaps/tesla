@@ -1,5 +1,5 @@
 import Papa from 'papaparse';
-import { Consumption } from './consumption';
+import { formatDate } from './date';
 
 export type Data = {
   CUPS: string;
@@ -7,6 +7,15 @@ export type Data = {
   Hora: string;
   Consumo: string;
   Metodo_obtencion: string;
+};
+export type Period = 'punta' | 'valle' | 'llano';
+export type Consumption = {
+  [date: string]: {
+    [k: number]: {
+      consumption: number;
+      period: Period;
+    };
+  };
 };
 
 export const parseCSV = (file: File) => (): Promise<Data[]> => {
@@ -37,9 +46,37 @@ export const toConsumptions = (data: Data[]): Consumption => {
       ...acc,
       [row.Fecha]: {
         ...(acc[row.Fecha] || {}),
-        [row.Hora]: { consumption: parseFloat(row.Consumo.replace(',', '.')) },
+        [row.Hora]: {
+          consumption: parseFloat(row.Consumo.replace(',', '.')),
+          period: getPeriod(row.Hora, row.Fecha),
+        },
       },
     }),
     {},
   );
+};
+
+const isAHoliDay = (date: string): boolean =>
+  [
+    '01/01/2022',
+    '06/01/2022',
+    '15/04/2022',
+    '15/08/2022',
+    '12/10/2022',
+    '01/11/2022',
+    '06/12/2022',
+    '08/12/2022',
+  ].includes(date) ||
+  new Date(formatDate(date)).getDay() === 0 ||
+  new Date(formatDate(date)).getDay() === 6;
+
+const getPeriod = (hour: string, date: string): Period => {
+  const hourNumber = parseInt(hour);
+  const valleHours = [1, 2, 3, 4, 5, 6, 7, 8];
+  const llanoHours = [9, 10, 15, 16, 17, 18, 23, 24];
+
+  if (isAHoliDay(date) || valleHours.includes(hourNumber)) return 'valle';
+  if (llanoHours.includes(hourNumber)) return 'llano';
+
+  return 'punta';
 };

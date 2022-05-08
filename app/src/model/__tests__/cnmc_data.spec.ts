@@ -108,9 +108,9 @@ describe('toConsumptions', () => {
 
     expect(consumptions).toEqual({
       '20/10/2020': {
-        '1': { consumption: 0.234 },
-        '10': { consumption: 0.234 },
-        '2': { consumption: 0.231 },
+        '1': { consumption: 0.234, period: 'valle' },
+        '10': { consumption: 0.234, period: 'llano' },
+        '2': { consumption: 0.231, period: 'valle' },
       },
     });
   });
