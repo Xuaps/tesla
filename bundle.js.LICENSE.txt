@@ -23,11 +23,6 @@ License: MIT
  * Released under the MIT License.
  */
 
-/*!
- * Microsoft Dynamic Proto Utility, 1.1.6
- * Copyright (c) Microsoft and contributors. All rights reserved.
- */
-
 /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
 /*! svg.draggable.js - v2.2.2 - 2019-01-08
