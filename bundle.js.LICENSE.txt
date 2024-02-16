@@ -18,8 +18,8 @@ License: MIT
 */
 
 /*!
- * ApexCharts v3.45.1
- * (c) 2018-2023 ApexCharts
+ * ApexCharts v3.45.2
+ * (c) 2018-2024 ApexCharts
  * Released under the MIT License.
  */
 
