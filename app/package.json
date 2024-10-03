@@ -57,7 +57,7 @@
     ]
   },
   "dependencies": {
-    "@sentry/react": "^7.0.0",
+    "@sentry/react": "^8.33.1",
     "@sentry/tracing": "^7.0.0",
     "apexcharts": "^3.33.0",
     "bootstrap": "^5.1.3",
